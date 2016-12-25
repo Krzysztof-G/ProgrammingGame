@@ -1,4 +1,4 @@
-﻿namespace ProgrammingGame.Web.Entities
+﻿namespace ProgrammingGame.Data.Domain.Entities
 {
     public class ItemType
     {
