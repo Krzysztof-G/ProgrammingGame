@@ -5,7 +5,7 @@ using ProgrammingGame.Data.Repositories.Interfaces;
 
 namespace ProgrammingGame.Data.Repositories.Instances
 {
-    public class CharactersRepository : GenericRepository<ProgrammingGameContext, Character>, ICharactersRepository
+    public class CharactersRepository : GenericRepository<Character>, ICharactersRepository
     {
     }
 }

@@ -2,27 +2,27 @@
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using ProgrammingGame.Data.Infrastructure.Data;
 
 namespace ProgrammingGame.Data.Repositories.Base
 {
-    public abstract class GenericRepository<C, T> : IGenericRepository<T>, IRepository
-            where C : DbContext
+    public abstract class GenericRepository<T> : IGenericRepository<T>, IRepository
             where T : class
     {
-        protected readonly C Entities;
+        protected readonly ProgrammingGameContext Entities;
 
-        public C Context => Entities;
+        public ProgrammingGameContext Context => Entities;
 
         protected GenericRepository()
         {
-            Entities = Activator.CreateInstance<C>();
+            this.Entities = ProgrammingGameContextFactory.Create();
         }
 
         protected GenericRepository(IRepository existingRepository)
         {
-            Entities = (existingRepository as GenericRepository<C, T>)?.Context;
+            Entities = (existingRepository as GenericRepository<T>).Context;
         }
-        
+
         public virtual IQueryable<T> GetAll()
         {
             return Entities.Set<T>();
@@ -35,22 +35,22 @@ namespace ProgrammingGame.Data.Repositories.Base
 
         public virtual void Add(T entity)
         {
-            Entities.Set<T>().Add(entity);
+            this.Entities.Set<T>().Add(entity);
         }
 
         public virtual void Delete(T entity)
         {
-            Entities.Set<T>().Remove(entity);
+            this.Entities.Set<T>().Remove(entity);
         }
 
         public virtual void Edit(T entity)
         {
-            Entities.Entry<T>(entity).State = EntityState.Modified;
+            this.Entities.Entry<T>(entity).State = EntityState.Modified;
         }
 
         public virtual void Save()
         {
-            Entities.SaveChanges();
+            this.Entities.SaveChanges();
         }
     }
 }

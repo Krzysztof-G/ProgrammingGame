@@ -6,6 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ProgrammingGame.Data.Infrastructure.Data;
+using ProgrammingGame.Data.Repositories.Base;
+using ProgrammingGame.Data.Repositories.Instances;
+using ProgrammingGame.Data.Repositories.Interfaces;
 
 namespace ProgrammingGame.Web
 {
@@ -35,6 +38,10 @@ namespace ProgrammingGame.Web
                 .AddMvcOptions(o => o.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter()));
 
             services.AddEntityFramework(Configuration.GetConnectionString("DefaultConnection"));
+
+            services.AddTransient<ICharactersRepository, CharactersRepository>();
+            services.AddTransient<IIndicatorsRepository, IndicatorsRepository>();
+            services.AddTransient<IOwnedItemsRepository, OwnedItemsRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, ProgrammingGameContext context)

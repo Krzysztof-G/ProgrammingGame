@@ -5,7 +5,7 @@ using ProgrammingGame.Data.Repositories.Interfaces;
 
 namespace ProgrammingGame.Data.Repositories.Instances
 {
-    public class OwnedItemsRepository : GenericRepository<ProgrammingGameContext, OwnedItem>, IOwnedItemsRepository
+    public class OwnedItemsRepository : GenericRepository<OwnedItem>, IOwnedItemsRepository
     {
     }
 }

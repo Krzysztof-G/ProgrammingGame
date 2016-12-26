@@ -5,7 +5,7 @@ using ProgrammingGame.Data.Repositories.Interfaces;
 
 namespace ProgrammingGame.Data.Repositories.Instances
 {
-    public class IndicatorsRepository : GenericRepository<ProgrammingGameContext, Indicator>, IIndicatorsRepository
+    public class IndicatorsRepository : GenericRepository<Indicator>, IIndicatorsRepository
     {
     }
 }
