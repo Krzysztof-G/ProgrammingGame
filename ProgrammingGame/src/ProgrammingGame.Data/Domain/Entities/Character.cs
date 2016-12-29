@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ProgrammingGame.Data.Domain.Entities
 {
     public class Character
     {
         public long Id { get; set; }
+        public Guid Key { get; set; }
         public string Name { get; set; }
         public int State { get; set; }
         public int Level { get; set; }
