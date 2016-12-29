@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ProgrammingGame.Web", "src\ProgrammingGame.Web\ProgrammingGame.Web.xproj", "{E4535B3D-7956-4AE6-8F95-94E12BC2A776}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ProgrammingGame.Api", "src\ProgrammingGame.Api\ProgrammingGame.Api.xproj", "{E4535B3D-7956-4AE6-8F95-94E12BC2A776}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ProgrammingGame.Data", "src\ProgrammingGame.Data\ProgrammingGame.Data.xproj", "{8681B2F8-515B-440C-B0A1-922258A86ED5}"
 EndProject

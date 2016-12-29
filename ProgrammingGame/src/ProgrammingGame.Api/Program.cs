@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Microsoft.AspNetCore.Hosting;
 
-namespace ProgrammingGame.Web
+namespace ProgrammingGame.Api
 {
     public class Program
     {

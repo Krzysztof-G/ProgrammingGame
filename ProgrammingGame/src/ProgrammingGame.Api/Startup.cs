@@ -10,7 +10,7 @@ using ProgrammingGame.Data.Repositories.Base;
 using ProgrammingGame.Data.Repositories.Instances;
 using ProgrammingGame.Data.Repositories.Interfaces;
 
-namespace ProgrammingGame.Web
+namespace ProgrammingGame.Api
 {
     public class Startup
     {
