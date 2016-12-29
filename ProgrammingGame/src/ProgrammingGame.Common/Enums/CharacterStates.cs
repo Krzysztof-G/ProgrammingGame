@@ -3,5 +3,6 @@
     public enum CharacterStates
     {
         Idle = 0,
+        Sleep = 1,
     }
 }

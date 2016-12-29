@@ -9,6 +9,7 @@ namespace ProgrammingGame.Api.Controllers
         {
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return Ok("Home! Sweet Home!");
