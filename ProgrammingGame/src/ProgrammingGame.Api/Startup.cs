@@ -66,7 +66,8 @@ namespace ProgrammingGame.Api
 
         private void ConfigureRoutes(IRouteBuilder routeBuilder)
         {
-            routeBuilder.MapRoute("default", "api/{characterKey:guid}/{controller}/{action=Get}");
+            routeBuilder.MapRoute("character", "api/{characterKey:guid}/{controller}/{action=Get}");
+            routeBuilder.MapRoute("default", "api/{controller}/{action}");
         }
     }
 }
