@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Routing;
@@ -6,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ProgrammingGame.Data.Infrastructure.Data;
-using ProgrammingGame.Data.Repositories.Base;
 using ProgrammingGame.Data.Repositories.Instances;
 using ProgrammingGame.Data.Repositories.Interfaces;
 
@@ -38,6 +38,7 @@ namespace ProgrammingGame.Api
                 .AddMvcOptions(o => o.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter()));
 
             services.AddEntityFramework(Configuration.GetConnectionString("DefaultConnection"));
+            services.AddAutoMapper();
 
             services.AddTransient<ICharactersRepository, CharactersRepository>();
             services.AddTransient<IIndicatorsRepository, IndicatorsRepository>();
@@ -65,7 +66,7 @@ namespace ProgrammingGame.Api
 
         private void ConfigureRoutes(IRouteBuilder routeBuilder)
         {
-            routeBuilder.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            routeBuilder.MapRoute("default", "api/{characterKey:guid}/{controller}/{action=Get}");
         }
     }
 }
