@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ProgrammingGame.Api.Services.Instances;
+using ProgrammingGame.Api.Services.Interfaces;
 using ProgrammingGame.Data.Infrastructure.Data;
 using ProgrammingGame.Data.Repositories.Instances;
 using ProgrammingGame.Data.Repositories.Interfaces;
@@ -40,9 +42,8 @@ namespace ProgrammingGame.Api
             services.AddEntityFramework(Configuration.GetConnectionString("DefaultConnection"));
             services.AddAutoMapper();
 
-            services.AddTransient<ICharactersRepository, CharactersRepository>();
-            services.AddTransient<IIndicatorsRepository, IndicatorsRepository>();
-            services.AddTransient<IOwnedItemsRepository, OwnedItemsRepository>();
+            ConfigureRepositoriensInjection(services);
+            ConfigureServicesInjection(services);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, ProgrammingGameContext context)
@@ -62,6 +63,18 @@ namespace ProgrammingGame.Api
             app.UseMvc(ConfigureRoutes);
 
             DbInitializer.Initialize(context);
+        }
+
+        private void ConfigureRepositoriensInjection(IServiceCollection services)
+        {
+            services.AddTransient<ICharactersRepository, CharactersRepository>();
+            services.AddTransient<IIndicatorsRepository, IndicatorsRepository>();
+            services.AddTransient<IOwnedItemsRepository, OwnedItemsRepository>();
+        }
+
+        private void ConfigureServicesInjection(IServiceCollection services)
+        {
+            services.AddTransient<ICharactersService, CharactersService>();
         }
 
         private void ConfigureRoutes(IRouteBuilder routeBuilder)
