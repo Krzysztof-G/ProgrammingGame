@@ -1,10 +1,11 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using ProgrammingGame.Api.Filters;
 using ProgrammingGame.Api.Models;
 using ProgrammingGame.Api.Services.Interfaces;
 using ProgrammingGame.Common.Enums;
 using ProgrammingGame.Data.Domain.Entities;
+using System;
 
 namespace ProgrammingGame.Api.Controllers
 {
@@ -18,6 +19,7 @@ namespace ProgrammingGame.Api.Controllers
         }
 
         [HttpGet]
+        [CharacterLevelRestrictionFilter(0)]
         public IActionResult Get(Guid characterKey)
         {
 
@@ -30,6 +32,7 @@ namespace ProgrammingGame.Api.Controllers
         }
 
         [HttpPatch]
+        [CharacterLevelRestrictionFilter(0)]
         public IActionResult GoSleep(Guid characterKey)
         {
             var characterFromDatabase = _charactersService.GetCharacterByKey(characterKey);
@@ -48,6 +51,7 @@ namespace ProgrammingGame.Api.Controllers
         }
 
         [HttpPatch]
+        [CharacterLevelRestrictionFilter(0)]
         public IActionResult WakeUp(Guid characterKey)
         {
             var characterFromDatabase = _charactersService.GetCharacterByKey(characterKey);
