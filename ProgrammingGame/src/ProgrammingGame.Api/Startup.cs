@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ProgrammingGame.Api.Middleware;
 using ProgrammingGame.Api.Services.Instances;
 using ProgrammingGame.Api.Services.Interfaces;
 using ProgrammingGame.Data.Infrastructure.Data;
@@ -60,6 +61,7 @@ namespace ProgrammingGame.Api
             }
 
             app.UseStatusCodePages();
+            app.UseMiddleware(typeof(ErrorHandlingMiddleware));
             app.UseMvc(ConfigureRoutes);
 
             DbInitializer.Initialize(context);
