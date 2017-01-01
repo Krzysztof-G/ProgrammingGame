@@ -6,15 +6,18 @@ using ProgrammingGame.Api.Services.Interfaces;
 using ProgrammingGame.Common.Enums;
 using ProgrammingGame.Data.Entities;
 using System;
+using Microsoft.Extensions.Logging;
 
 namespace ProgrammingGame.Api.Controllers
 {
     public class CharactersController : BaseController
     {
+        private readonly ILogger<SystemController> _logger;
         private readonly ICharactersService _charactersService;
 
-        public CharactersController(IMapper mapper, ICharactersService charactersService) : base(mapper)
+        public CharactersController(IMapper mapper, ILogger<SystemController> logger, ICharactersService charactersService) : base(mapper)
         {
+            _logger = logger;
             _charactersService = charactersService;
         }
 
@@ -41,7 +44,7 @@ namespace ProgrammingGame.Api.Controllers
 
             if (characterFromDatabase.State == (int)CharacterStates.Sleep)
             {
-                ModelState.AddModelError("State", "You can go sleep, because you already sleep.");
+                ModelState.AddModelError("State", "You can go sleep, because you already a sleep.");
                 return BadRequest(ModelState);
             }
             
@@ -60,7 +63,7 @@ namespace ProgrammingGame.Api.Controllers
 
             if (characterFromDatabase.State == (int)CharacterStates.Idle)
             {
-                ModelState.AddModelError("State", "You can wake up, because you already wake up.");
+                ModelState.AddModelError("State", "You can wake up, because you already not sleeping.");
                 return BadRequest(ModelState);
             }
 

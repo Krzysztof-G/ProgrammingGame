@@ -1,17 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using ProgrammingGame.Api.Models;
 using ProgrammingGame.Common.Enums;
+using System;
+using System.Collections.Generic;
 
 namespace ProgrammingGame.Api.Controllers
 {
     public class SystemController : BaseController
     {
-        public SystemController(IMapper mapper) : base(mapper)
+        private readonly ILogger<SystemController> _logger;
+
+        public SystemController(IMapper mapper, ILogger<SystemController> logger) : base(mapper)
         {
+            _logger = logger;
         }
 
         [HttpGet]
