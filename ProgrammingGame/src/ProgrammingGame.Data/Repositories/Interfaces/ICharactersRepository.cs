@@ -6,6 +6,5 @@ namespace ProgrammingGame.Data.Repositories.Interfaces
 {
     public interface ICharactersRepository : IGenericRepository<Character>
     {
-        Character GetCharacterByKey(Guid characterKey);
     }
 }
