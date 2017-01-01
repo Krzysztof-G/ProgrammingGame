@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProgrammingGame.Data.Domain.Entities;
+using ProgrammingGame.Data.Entities;
 
 namespace ProgrammingGame.Data.Infrastructure.Data
 {

@@ -1,8 +1,8 @@
-﻿using ProgrammingGame.Data.Domain.Entities;
-using ProgrammingGame.Data.Repositories.Base;
+﻿using ProgrammingGame.Data.Repositories.Base;
 using ProgrammingGame.Data.Repositories.Interfaces;
 using System;
 using System.Linq;
+using ProgrammingGame.Data.Entities;
 
 namespace ProgrammingGame.Data.Repositories.Instances
 {
