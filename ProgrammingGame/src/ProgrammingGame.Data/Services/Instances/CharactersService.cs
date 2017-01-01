@@ -96,5 +96,12 @@ namespace ProgrammingGame.Data.Services.Instances
             _charactersRepository.Edit(character);
             _charactersRepository.Save();
         }
+
+        public void ResetLastStateChangeTime(Character character)
+        {
+            character.LastStateChangeTime = CommonValues.ActaulaDateTime;
+            _charactersRepository.Edit(character);
+            _charactersRepository.Save();
+        }
     }
 }

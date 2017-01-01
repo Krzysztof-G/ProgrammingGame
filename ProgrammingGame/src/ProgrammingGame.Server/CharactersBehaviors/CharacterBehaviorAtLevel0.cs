@@ -81,12 +81,14 @@ namespace ProgrammingGame.Server.CharactersBehaviors
                 && action.LastExecutionTime.Add(SpanBeetwenEnergyAnalyseActions) <= CommonValues.ActaulaDateTime)
             {
                 IndicatorsService.ChangeValue(energy, -EnergyPointsLostWhenNotSleeping);
+                CharactersService.ResetLastStateChangeTime(Character);
             }
             else if (Character.State == (int)CharacterStates.Sleep
                 && Character.LastStateChangeTime.Add(SpanBeetwenEnergyAnalyseActions) <= CommonValues.ActaulaDateTime
                 && action.LastExecutionTime.Add(SpanBeetwenEnergyAnalyseActions) <= CommonValues.ActaulaDateTime)
             {
                 IndicatorsService.ChangeValue(energy, EnergyPointsGeinWhenSleeping);
+                CharactersService.ResetLastStateChangeTime(Character);
             }
         }
 
