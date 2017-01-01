@@ -20,7 +20,7 @@ namespace ProgrammingGame.Server.Characters
             Character = character;
         }
 
-        public abstract void GainPoints();
+        public abstract void GainAndLostPoints();
         public abstract void AnalyseIndicators();
         public abstract bool ShouldLevelUp();
         public abstract void LevelUp();

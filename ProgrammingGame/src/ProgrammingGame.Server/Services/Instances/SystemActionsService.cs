@@ -24,5 +24,12 @@ namespace ProgrammingGame.Server.Services.Instances
             });
             _systemActionsRepository.Save();
         }
+
+        public void ResetLastExecutionTime(SystemAction action)
+        {
+            action.LastExecutionTime = Common.CommonValues.ActaulaDateTime;
+            _systemActionsRepository.Edit(action);
+            _systemActionsRepository.Save();
+        }
     }
 }
