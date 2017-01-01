@@ -74,12 +74,17 @@ namespace ProgrammingGame.Api
         {
             services.AddTransient<ICharactersRepository, CharactersRepository>();
             services.AddTransient<IIndicatorsRepository, IndicatorsRepository>();
+            services.AddTransient<IIndicatorTypesRepository, IndicatorTypesRepository>();
             services.AddTransient<IOwnedItemsRepository, OwnedItemsRepository>();
+            services.AddTransient<ISystemActionsRepository, SystemActionsRepository>();
+            services.AddTransient<ISystemActionTypesRepository, SystemActionTypesRepository>();
         }
 
         private void ConfigureServicesInjection(IServiceCollection services)
         {
             services.AddTransient<ICharactersService, CharactersService>();
+            services.AddTransient<IIndicatorsService, IndicatorsService>();
+            services.AddTransient<ISystemActionsService, SystemActionsService>();
         }
 
         private void ConfigureRoutes(IRouteBuilder routeBuilder)
