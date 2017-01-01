@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ProgrammingGame.Api.Models;
-using ProgrammingGame.Data.Domain.Entities;
+using ProgrammingGame.Data.Entities;
 
 namespace ProgrammingGame.Api.Core
 {

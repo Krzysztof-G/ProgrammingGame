@@ -1,8 +1,7 @@
-﻿using ProgrammingGame.Data.Repositories.Base;
+﻿using ProgrammingGame.Data.Entities;
 using ProgrammingGame.Data.Repositories.Interfaces;
 using System;
 using System.Linq;
-using ProgrammingGame.Data.Entities;
 
 namespace ProgrammingGame.Data.Repositories.Instances
 {

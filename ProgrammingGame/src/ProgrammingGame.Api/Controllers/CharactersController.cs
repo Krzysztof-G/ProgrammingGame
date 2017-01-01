@@ -4,7 +4,7 @@ using ProgrammingGame.Api.Filters;
 using ProgrammingGame.Api.Models;
 using ProgrammingGame.Api.Services.Interfaces;
 using ProgrammingGame.Common.Enums;
-using ProgrammingGame.Data.Domain.Entities;
+using ProgrammingGame.Data.Entities;
 using System;
 
 namespace ProgrammingGame.Api.Controllers

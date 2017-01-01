@@ -1,6 +1,6 @@
 ﻿using System;
 using ProgrammingGame.Common.Enums;
-using ProgrammingGame.Data.Domain.Entities;
+using ProgrammingGame.Data.Entities;
 
 namespace ProgrammingGame.Api.Services.Interfaces
 {

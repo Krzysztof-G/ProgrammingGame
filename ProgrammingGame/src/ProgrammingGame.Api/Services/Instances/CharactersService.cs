@@ -2,7 +2,7 @@
 using System.Linq;
 using ProgrammingGame.Api.Services.Interfaces;
 using ProgrammingGame.Common.Enums;
-using ProgrammingGame.Data.Domain.Entities;
+using ProgrammingGame.Data.Entities;
 using ProgrammingGame.Data.Repositories.Interfaces;
 
 namespace ProgrammingGame.Api.Services.Instances
