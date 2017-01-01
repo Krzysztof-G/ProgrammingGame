@@ -4,7 +4,7 @@ using ProgrammingGame.Data.Repositories.Interfaces;
 
 namespace ProgrammingGame.Data.Repositories.Instances
 {
-    public class IndicatorsRepository : GenericRepository<Indicator>, IIndicatorsRepository
+    public class SystemActionTypesRepository : GenericRepository<SystemActionType>, ISystemActionTypesRepository
     {
     }
 }
