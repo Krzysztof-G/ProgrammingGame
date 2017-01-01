@@ -5,14 +5,14 @@ using ProgrammingGame.Server.Services.Interfaces;
 
 namespace ProgrammingGame.Server.Characters
 {
-    public abstract class CharacterBase
+    public abstract class CharacterBehaviorBase
     {
         protected readonly ICharactersService CharactersService;
         protected readonly IIndicatorsService IndicatorsService;
         protected readonly ISystemActionsService SystemActionsService;
         protected readonly Character Character;
 
-        protected CharacterBase(Character character)
+        protected CharacterBehaviorBase(Character character)
         {
             CharactersService = new CharactersService(new CharactersRepository());
             IndicatorsService = new IndicatorsService(new IndicatorsRepository());

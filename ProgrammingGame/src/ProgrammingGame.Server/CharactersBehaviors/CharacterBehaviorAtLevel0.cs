@@ -1,12 +1,13 @@
-﻿using ProgrammingGame.Common;
+﻿using System;
+using System.Linq;
+using ProgrammingGame.Common;
 using ProgrammingGame.Common.Enums;
 using ProgrammingGame.Data.Entities;
-using System;
-using System.Linq;
+using ProgrammingGame.Server.Characters;
 
-namespace ProgrammingGame.Server.Characters
+namespace ProgrammingGame.Server.CharactersBehaviors
 {
-    public class CharacterAtLevel0 : CharacterBase
+    public class CharacterBehaviorAtLevel0 : CharacterBehaviorBase
     {
         private readonly long ExperienceForNextLevel = 16;
 
@@ -23,7 +24,7 @@ namespace ProgrammingGame.Server.Characters
         private readonly int ExperienceLostForSleepToMuch = 1;
         private readonly TimeSpan SpanBeetwenExperienceLostForSleepToMuchActions = new TimeSpan(1, 0, 0);
 
-        public CharacterAtLevel0(Character character) : base(character)
+        public CharacterBehaviorAtLevel0(Character character) : base(character)
         {
         }
 
