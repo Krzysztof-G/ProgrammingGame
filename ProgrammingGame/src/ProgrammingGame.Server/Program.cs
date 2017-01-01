@@ -6,6 +6,8 @@ namespace ProgrammingGame.Server
     {
         public static void Main(string[] args)
         {
+            var mainServerFlow = new MainServerFlow();
+            mainServerFlow.Run();
         }
     }
 }
