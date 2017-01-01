@@ -14,7 +14,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
 
         protected CharacterBehaviorBase(Character character)
         {
-            CharactersService = new CharactersService(new CharactersRepository());
+            CharactersService = new CharactersService(new CharactersRepository(), new IndicatorsRepository(), new IndicatorTypesRepository(), new SystemActionsRepository());
             IndicatorsService = new IndicatorsService(new IndicatorsRepository());
             SystemActionsService = new SystemActionsService(new SystemActionsRepository());
             Character = character;

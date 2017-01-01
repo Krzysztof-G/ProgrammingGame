@@ -16,7 +16,7 @@ namespace ProgrammingGame.Api.Filters
 
         public CharacterLevelRestrictionFilterAttribute(int minCharacterLevel)
         {
-            _charactersService = new CharactersService(new CharactersRepository());
+            _charactersService = new CharactersService(new CharactersRepository(), new IndicatorsRepository(), new IndicatorTypesRepository(), new SystemActionsRepository());
             _minCharacterLevel = minCharacterLevel;
         }
 
