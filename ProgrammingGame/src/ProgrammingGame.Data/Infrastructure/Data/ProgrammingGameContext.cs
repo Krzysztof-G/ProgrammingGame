@@ -15,6 +15,8 @@ namespace ProgrammingGame.Data.Infrastructure.Data
         public DbSet<IndicatorType> IndicatorTypes { get; set; }
         public DbSet<ItemType> Item { get; set; }
         public DbSet<OwnedItem> OwnedItems { get; set; }
+        public DbSet<SystemAction> SystemActions { get; set; }
+        public DbSet<SystemActionType> SystemActionTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -9,12 +9,14 @@ namespace ProgrammingGame.Server.Characters
     {
         protected readonly ICharactersService CharactersService;
         protected readonly IIndicatorsService IndicatorsService;
+        protected readonly ISystemActionsService SystemActionsService;
         protected readonly Character Character;
 
         protected CharacterBase(Character character)
         {
             CharactersService = new CharactersService(new CharactersRepository());
             IndicatorsService = new IndicatorsService(new IndicatorsRepository());
+            SystemActionsService = new SystemActionsService(new SystemActionsRepository());
             Character = character;
         }
 
