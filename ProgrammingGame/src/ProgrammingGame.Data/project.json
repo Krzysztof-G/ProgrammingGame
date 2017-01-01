@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
 
   "buildOptions": {
@@ -23,9 +23,10 @@
       "type": "build"
     },
     "Microsoft.EntityFrameworkCore.Tools": {
-      "version": "1.0.0-preview2-final",
-      "type": "build"
-    }
+        "version": "1.0.0-preview2-final",
+        "type": "build"
+    },
+    "ProgrammingGame.Common": "1.0.0-*"
   },
 
   "tools": {

@@ -1,9 +1,9 @@
 ﻿using ProgrammingGame.Data.Entities;
 using ProgrammingGame.Data.Repositories.Instances;
-using ProgrammingGame.Server.Services.Instances;
-using ProgrammingGame.Server.Services.Interfaces;
+using ProgrammingGame.Data.Services.Instances;
+using ProgrammingGame.Data.Services.Interfaces;
 
-namespace ProgrammingGame.Server.Characters
+namespace ProgrammingGame.Server.CharactersBehaviors
 {
     public abstract class CharacterBehaviorBase
     {

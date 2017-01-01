@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using ProgrammingGame.Api.Exceptions;
-using ProgrammingGame.Api.Services.Instances;
-using ProgrammingGame.Api.Services.Interfaces;
 using ProgrammingGame.Common.Enums;
-using ProgrammingGame.Data.Repositories.Instances;
-using System;
 using ProgrammingGame.Data.Entities;
+using ProgrammingGame.Data.Repositories.Instances;
+using ProgrammingGame.Data.Services.Instances;
+using ProgrammingGame.Data.Services.Interfaces;
+using System;
 
 namespace ProgrammingGame.Api.Filters
 {

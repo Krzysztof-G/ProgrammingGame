@@ -2,9 +2,9 @@
 using ProgrammingGame.Common.Enums;
 using ProgrammingGame.Data.Entities;
 using ProgrammingGame.Data.Repositories.Interfaces;
-using ProgrammingGame.Server.Services.Interfaces;
+using ProgrammingGame.Data.Services.Interfaces;
 
-namespace ProgrammingGame.Server.Services.Instances
+namespace ProgrammingGame.Data.Services.Instances
 {
     public class IndicatorsService : IIndicatorsService
     {

@@ -3,7 +3,6 @@ using System.Linq;
 using ProgrammingGame.Common;
 using ProgrammingGame.Common.Enums;
 using ProgrammingGame.Data.Entities;
-using ProgrammingGame.Server.Characters;
 
 namespace ProgrammingGame.Server.CharactersBehaviors
 {

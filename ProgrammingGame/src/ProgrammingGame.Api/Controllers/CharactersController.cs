@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using ProgrammingGame.Api.Filters;
 using ProgrammingGame.Api.Models;
-using ProgrammingGame.Api.Services.Interfaces;
 using ProgrammingGame.Common.Enums;
 using ProgrammingGame.Data.Entities;
+using ProgrammingGame.Data.Services.Interfaces;
 using System;
-using Microsoft.Extensions.Logging;
 
 namespace ProgrammingGame.Api.Controllers
 {

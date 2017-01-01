@@ -8,11 +8,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using ProgrammingGame.Api.Middleware;
-using ProgrammingGame.Api.Services.Instances;
-using ProgrammingGame.Api.Services.Interfaces;
 using ProgrammingGame.Data.Infrastructure.Data;
 using ProgrammingGame.Data.Repositories.Instances;
 using ProgrammingGame.Data.Repositories.Interfaces;
+using ProgrammingGame.Data.Services.Instances;
+using ProgrammingGame.Data.Services.Interfaces;
 
 namespace ProgrammingGame.Api
 {

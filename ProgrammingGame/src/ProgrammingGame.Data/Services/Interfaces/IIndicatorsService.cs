@@ -1,7 +1,7 @@
 ﻿using ProgrammingGame.Common.Enums;
 using ProgrammingGame.Data.Entities;
 
-namespace ProgrammingGame.Server.Services.Interfaces
+namespace ProgrammingGame.Data.Services.Interfaces
 {
     public interface IIndicatorsService
     {

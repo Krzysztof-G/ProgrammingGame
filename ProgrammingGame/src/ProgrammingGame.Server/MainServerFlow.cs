@@ -1,6 +1,5 @@
 ﻿using ProgrammingGame.Data.Entities;
 using ProgrammingGame.Data.Repositories.Interfaces;
-using ProgrammingGame.Server.Characters;
 using ProgrammingGame.Server.CharactersBehaviors;
 using System.Collections.Generic;
 using System.IO;
