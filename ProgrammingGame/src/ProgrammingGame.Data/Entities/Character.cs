@@ -9,6 +9,7 @@ namespace ProgrammingGame.Data.Entities
         public Guid Key { get; set; }
         public string Name { get; set; }
         public int State { get; set; }
+        public DateTime LastStateChangeTime { get; set; }
         public int Level { get; set; }
         public long Experience { get; set; }
         public long Cash { get; set; }
@@ -17,6 +18,7 @@ namespace ProgrammingGame.Data.Entities
         public User User { get; set; }
 
         public ICollection<Indicator> Indicators { get; set; }
-        public ICollection<OwnedItem> OwnedItems { get; set; }
+        public ICollection<OwnedItem> OwnedItems { get; set; }  
+        public ICollection<SystemAction> SystemActions { get; set; }
     }
 }
