@@ -1,4 +1,4 @@
-﻿namespace ProgrammingGame.Data.Domain.Entities
+﻿namespace ProgrammingGame.Data.Entities
 {
     public class User
     {

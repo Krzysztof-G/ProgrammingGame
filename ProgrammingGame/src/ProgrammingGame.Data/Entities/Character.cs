@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ProgrammingGame.Data.Domain.Entities
+namespace ProgrammingGame.Data.Entities
 {
     public class Character
     {
