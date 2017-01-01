@@ -5,17 +5,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ProgrammingGame.Data.Repositories.Instances;
+using ProgrammingGame.Data.Services.Instances;
+using ProgrammingGame.Data.Services.Interfaces;
 
 namespace ProgrammingGame.Server
 {
     public class MainServerFlow
     {
-        private readonly ICharactersRepository _charactersRepository;
+        private readonly ICharactersService _charactersService;
 
         public MainServerFlow()
         {
-            _charactersRepository = new CharactersRepository();
+            _charactersService = new CharactersService(new CharactersRepository(), new IndicatorsRepository(), new IndicatorTypesRepository(), new SystemActionsRepository());
         }
+
 
         public void Run()
         {
@@ -35,7 +38,7 @@ namespace ProgrammingGame.Server
 
         private List<Character> GetCharacters()
         {
-            return _charactersRepository.GetAll().ToList();
+            return _charactersService.GetAllWithRelatedEntities().ToList();
         }
 
         private List<CharacterBehaviorBase> ConvertToCharacterBehaviors(List<Character> characters)

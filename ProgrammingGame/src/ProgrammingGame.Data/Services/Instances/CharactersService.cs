@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using ProgrammingGame.Common;
 using ProgrammingGame.Common.Enums;
 using ProgrammingGame.Data.Entities;
-using ProgrammingGame.Data.Repositories.Instances;
 using ProgrammingGame.Data.Repositories.Interfaces;
 using ProgrammingGame.Data.Services.Interfaces;
 
@@ -23,7 +24,20 @@ namespace ProgrammingGame.Data.Services.Instances
             _indicatorTypesRepository = indicatorTypesRepository;
             _systemActionsRepository = systemActionsRepository;
         }
-        
+
+        public IEnumerable<Character> GetAllWithRelatedEntities()
+        {
+            return _charactersRepository
+                .Context
+                .Characters
+                .Include(x => x.Indicators)
+                .ThenInclude(x => x.IndicatorType)
+                .Include(x => x.OwnedItems)
+                .ThenInclude(x => x.ItemType)
+                .Include(x => x.SystemActions)
+                .ThenInclude(x => x.Type);
+        }
+
         public Character GetCharacterByKey(Guid characterKey)
         {
             return _charactersRepository.FindBy(ch => ch.Key == characterKey).FirstOrDefault();
@@ -33,7 +47,7 @@ namespace ProgrammingGame.Data.Services.Instances
         {
             var newCharacter = new Character
             {
-                Key = new Guid(),
+                Key = Guid.NewGuid(),
                 Name = characterName,
                 State = (int)CharacterStates.Idle,
                 LastStateChangeTime = CommonValues.ActaulaDateTime,
@@ -43,6 +57,7 @@ namespace ProgrammingGame.Data.Services.Instances
                 UserId = userId,
             };
             _charactersRepository.Add(newCharacter);
+            _charactersRepository.Save();
 
             var energy = new Indicator
             {
@@ -51,11 +66,13 @@ namespace ProgrammingGame.Data.Services.Instances
                 Value = _indicatorTypesRepository.FindBy(x => x.Id == (int)IndicatorTypes.Energy).FirstOrDefault()?.DefaultValue ?? 0
             };
             _indicatorsRepository.Add(energy);
+            _indicatorsRepository.Save();
 
             _systemActionsRepository.Add(new SystemAction { CharacterId = newCharacter.Id, TypeId = (int)SystemActionTypes.SpanBeetwenEnergyAnalyse, LastExecutionTime = CommonValues.ActaulaDateTime });
             _systemActionsRepository.Add(new SystemAction { CharacterId = newCharacter.Id, TypeId = (int)SystemActionTypes.GainPointsForBeingRested, LastExecutionTime = CommonValues.ActaulaDateTime });
             _systemActionsRepository.Add(new SystemAction { CharacterId = newCharacter.Id, TypeId = (int)SystemActionTypes.LostPointsForBeingSleepy, LastExecutionTime = CommonValues.ActaulaDateTime });
             _systemActionsRepository.Add(new SystemAction { CharacterId = newCharacter.Id, TypeId = (int)SystemActionTypes.LostPointsForSleepToMuch, LastExecutionTime = CommonValues.ActaulaDateTime });
+            _systemActionsRepository.Save();
         }
 
         public void SetCharacterState(Character character, CharacterStates newState)
