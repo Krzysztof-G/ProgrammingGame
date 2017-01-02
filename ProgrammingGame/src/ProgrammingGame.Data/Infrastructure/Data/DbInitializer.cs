@@ -42,13 +42,42 @@ namespace ProgrammingGame.Data.Infrastructure.Data
 
             if (!context.SystemActionTypes.Any())
             {
-                foreach (var systemActionTypeName in Enum.GetNames(typeof(SystemActionTypes)))
+                context.SystemActionTypes.Add(new SystemActionType
                 {
-                    context.SystemActionTypes.Add(new SystemActionType
-                    {
-                        Name = systemActionTypeName
-                    });
-                }
+                    Name = SystemActionTypes.SpanBeetwenEnergyAnalyse.ToString(),
+                    DelayBeetwenExecuting = new TimeSpan(1, 0, 0)
+                });
+
+                context.SystemActionTypes.Add(new SystemActionType
+                {
+                    Name = SystemActionTypes.GainPointsForBeingRested.ToString(),
+                    DelayBeetwenExecuting = new TimeSpan(1, 0, 0)
+                });
+
+                context.SystemActionTypes.Add(new SystemActionType
+                {
+                    Name = SystemActionTypes.LostPointsForBeingSleepy.ToString(),
+                    DelayBeetwenExecuting = new TimeSpan(1, 0, 0)
+                });
+
+                context.SystemActionTypes.Add(new SystemActionType
+                {
+                    Name = SystemActionTypes.LostPointsForSleepToMuch.ToString(),
+                    DelayBeetwenExecuting = new TimeSpan(1, 0, 0)
+                });
+
+                context.SystemActionTypes.Add(new SystemActionType
+                {
+                    Name = SystemActionTypes.LostPointsForBeingThirst.ToString(),
+                    DelayBeetwenExecuting = new TimeSpan(1, 0, 0)
+                });
+
+                context.SystemActionTypes.Add(new SystemActionType
+                {
+                    Name = SystemActionTypes.LostPointsForBeingHungry.ToString(),
+                    DelayBeetwenExecuting = new TimeSpan(1, 0, 0)
+                });
+
                 context.SaveChanges();
             }
         }

@@ -12,16 +12,12 @@ namespace ProgrammingGame.Server.CharactersBehaviors
 
         private readonly int EnergyPointsLostWhenNotSleeping = 6;
         private readonly int EnergyPointsGeinWhenSleeping = 12;
+
         private readonly TimeSpan SpanBeetwenEnergyAnalyseActions = new TimeSpan(1, 0, 0);
 
         private readonly int ExperienceGainForBeingRested = 1;
-        private readonly TimeSpan SpanBeetwenExperienceGainForBeingRestedActions = new TimeSpan(1, 0, 0);
-
         private readonly int ExperienceLostForBeingSleepy = 1;
-        private readonly TimeSpan SpanBeetwenExperienceLostForBeingSleepyActions = new TimeSpan(1, 0, 0);
-
         private readonly int ExperienceLostForSleepToMuch = 1;
-        private readonly TimeSpan SpanBeetwenExperienceLostForSleepToMuchActions = new TimeSpan(1, 0, 0);
 
         public CharacterBehaviorAtLevel0(Character character) : base(character)
         {
@@ -38,7 +34,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
         {
             var action = Character.SystemActions.FirstOrDefault(x => x.TypeId == (int)SystemActionTypes.GainPointsForBeingRested);
             var energy = Character.Indicators.FirstOrDefault(x => x.IndicatorTypeId == (int)IndicatorTypes.Energy);
-            if (action.LastExecutionTime.Add(SpanBeetwenExperienceGainForBeingRestedActions) <= CommonValues.ActaulaDateTime
+            if (SystemActionsService.AcionShouldBeExecuted(action)
                 && energy.Value > 0)
             {
                 CharactersService.AddExperienceToCharacter(Character, ExperienceGainForBeingRested);
@@ -50,7 +46,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
         {
             var action = Character.SystemActions.FirstOrDefault(x => x.TypeId == (int)SystemActionTypes.LostPointsForBeingSleepy);
             var energy = Character.Indicators.FirstOrDefault(x => x.IndicatorTypeId == (int)IndicatorTypes.Energy);
-            if (action.LastExecutionTime.Add(SpanBeetwenExperienceLostForBeingSleepyActions) <= CommonValues.ActaulaDateTime
+            if (SystemActionsService.AcionShouldBeExecuted(action)
                 && energy.Value == 0)
             {
                 CharactersService.AddExperienceToCharacter(Character, -ExperienceLostForBeingSleepy);
@@ -62,7 +58,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
         {
             var action = Character.SystemActions.FirstOrDefault(x => x.TypeId == (int)SystemActionTypes.LostPointsForSleepToMuch);
             var energy = Character.Indicators.FirstOrDefault(x => x.IndicatorTypeId == (int)IndicatorTypes.Energy);
-            if (action.LastExecutionTime.Add(SpanBeetwenExperienceLostForSleepToMuchActions) <= CommonValues.ActaulaDateTime
+            if (SystemActionsService.AcionShouldBeExecuted(action)
                 && energy.Value == 100
                 && Character.State == (int)CharacterStates.Sleep)
             {
@@ -78,14 +74,14 @@ namespace ProgrammingGame.Server.CharactersBehaviors
 
             if (Character.State == (int)CharacterStates.Idle
                 && Character.LastStateChangeTime.Add(SpanBeetwenEnergyAnalyseActions) <= CommonValues.ActaulaDateTime
-                && action.LastExecutionTime.Add(SpanBeetwenEnergyAnalyseActions) <= CommonValues.ActaulaDateTime)
+                && SystemActionsService.AcionShouldBeExecuted(action))
             {
                 IndicatorsService.ChangeValue(energy, -EnergyPointsLostWhenNotSleeping);
                 CharactersService.ResetLastStateChangeTime(Character);
             }
             else if (Character.State == (int)CharacterStates.Sleep
                 && Character.LastStateChangeTime.Add(SpanBeetwenEnergyAnalyseActions) <= CommonValues.ActaulaDateTime
-                && action.LastExecutionTime.Add(SpanBeetwenEnergyAnalyseActions) <= CommonValues.ActaulaDateTime)
+                && SystemActionsService.AcionShouldBeExecuted(action))
             {
                 IndicatorsService.ChangeValue(energy, EnergyPointsGeinWhenSleeping);
                 CharactersService.ResetLastStateChangeTime(Character);

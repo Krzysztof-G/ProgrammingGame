@@ -1,4 +1,5 @@
-﻿using ProgrammingGame.Common.Enums;
+﻿using ProgrammingGame.Common;
+using ProgrammingGame.Common.Enums;
 using ProgrammingGame.Data.Entities;
 using ProgrammingGame.Data.Repositories.Interfaces;
 using ProgrammingGame.Data.Services.Interfaces;
@@ -30,6 +31,11 @@ namespace ProgrammingGame.Data.Services.Instances
             action.LastExecutionTime = Common.CommonValues.ActaulaDateTime;
             _systemActionsRepository.Edit(action);
             _systemActionsRepository.Save();
+        }
+
+        public bool AcionShouldBeExecuted(SystemAction action)
+        {
+            return action.LastExecutionTime.Add(action.Type.DelayBeetwenExecuting) <= CommonValues.ActaulaDateTime;
         }
     }
 }
