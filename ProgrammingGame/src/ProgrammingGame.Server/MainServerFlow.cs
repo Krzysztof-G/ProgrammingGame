@@ -38,7 +38,7 @@ namespace ProgrammingGame.Server
 
         private List<Character> GetCharacters()
         {
-            return _charactersService.GetAllWithRelatedEntities().ToList();
+            return _charactersService.GetAllWithRelatedEntities().Where(x => x.IsActive).ToList();
         }
 
         private List<CharacterBehaviorBase> ConvertToCharacterBehaviors(List<Character> characters)

@@ -9,6 +9,7 @@ namespace ProgrammingGame.Data.Services.Interfaces
     {
         IEnumerable<Character> GetAllWithRelatedEntities();
         Character GetCharacterByKey(Guid characterKey);
+        void ActiveCharacter(long characterId);
         void CreateCharacter(string characterName, long userId);
         void SetCharacterState(Character character, CharacterStates newState);
         void AddExperienceToCharacter(Character character, long experienceToAdd);

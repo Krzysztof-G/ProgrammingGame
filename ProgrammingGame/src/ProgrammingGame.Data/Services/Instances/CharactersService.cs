@@ -43,6 +43,28 @@ namespace ProgrammingGame.Data.Services.Instances
             return _charactersRepository.FindBy(ch => ch.Key == characterKey).FirstOrDefault();
         }
 
+        public void ActiveCharacter(long characterId)
+        {
+            var character = _charactersRepository
+                .Context
+                .Characters
+                .Include(x => x.SystemActions)
+                .ThenInclude(x => x.Type)
+                .First(x => x.Id == characterId);
+
+            character.IsActive = true;
+            character.LastStateChangeTime = CommonValues.ActaulaDateTime;
+
+            foreach (var systemAction in character.SystemActions)
+            {
+                systemAction.LastExecutionTime = CommonValues.ActaulaDateTime;
+                _systemActionsRepository.Edit(systemAction);
+            }
+
+            _systemActionsRepository.Save();
+            _charactersRepository.Save();
+        }
+
         public void CreateCharacter(string characterName, long userId)
         {
             var newCharacter = new Character
