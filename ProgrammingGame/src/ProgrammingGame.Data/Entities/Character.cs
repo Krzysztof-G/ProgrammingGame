@@ -6,6 +6,7 @@ namespace ProgrammingGame.Data.Entities
     public class Character
     {
         public long Id { get; set; }
+        public bool IsActive { get; set; }
         public Guid Key { get; set; }
         public string Name { get; set; }
         public int State { get; set; }

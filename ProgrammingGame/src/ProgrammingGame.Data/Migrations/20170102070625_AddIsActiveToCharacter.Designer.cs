@@ -8,9 +8,10 @@ using ProgrammingGame.Data.Infrastructure.Data;
 namespace ProgrammingGame.Data.Migrations
 {
     [DbContext(typeof(ProgrammingGameContext))]
-    partial class ProgrammingGameContextModelSnapshot : ModelSnapshot
+    [Migration("20170102070625_AddIsActiveToCharacter")]
+    partial class AddIsActiveToCharacter
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")

@@ -48,6 +48,7 @@ namespace ProgrammingGame.Data.Services.Instances
             var newCharacter = new Character
             {
                 Key = Guid.NewGuid(),
+                IsActive = false,
                 Name = characterName,
                 State = (int)CharacterStates.Idle,
                 LastStateChangeTime = CommonValues.ActaulaDateTime,
