@@ -15,5 +15,6 @@ namespace ProgrammingGame.Data.Services.Interfaces
         void AddExperienceToCharacter(Character character, long experienceToAdd);
         void LevelUpCharacter(Character character, long pointsSurplus);
         void ResetLastStateChangeTime(Character character);
+        bool EnoughTimeHasPassedFromPreviousStatusAnalyze(Character character, TimeSpan delayBeetwenExecuting);
     }
 }

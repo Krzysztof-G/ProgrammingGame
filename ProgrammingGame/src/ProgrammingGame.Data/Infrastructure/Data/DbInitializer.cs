@@ -1,7 +1,7 @@
 ﻿using ProgrammingGame.Common.Enums;
+using ProgrammingGame.Data.Entities;
 using System;
 using System.Linq;
-using ProgrammingGame.Data.Entities;
 
 namespace ProgrammingGame.Data.Infrastructure.Data
 {
@@ -11,6 +11,12 @@ namespace ProgrammingGame.Data.Infrastructure.Data
         {
             context.Database.EnsureCreated();
 
+            IndicatorTypesInitialization(context);
+            SystemActionTypesInitialization(context);
+        }
+
+        private static void IndicatorTypesInitialization(ProgrammingGameContext context)
+        {
             if (!context.IndicatorTypes.Any())
             {
                 context.IndicatorTypes.Add(new IndicatorType
@@ -39,7 +45,7 @@ namespace ProgrammingGame.Data.Infrastructure.Data
 
                 context.IndicatorTypes.Add(new IndicatorType
                 {
-                    Name = IndicatorTypes.Fun.ToString(),
+                    Name = IndicatorTypes.Entertainment.ToString(),
                     MinValue = 0,
                     MaxValue = 100,
                     DefaultValue = 50,
@@ -47,42 +53,81 @@ namespace ProgrammingGame.Data.Infrastructure.Data
 
                 context.SaveChanges();
             }
-
+        }
+        private static void SystemActionTypesInitialization(ProgrammingGameContext context)
+        {
             if (!context.SystemActionTypes.Any())
             {
+                //Level 0
                 context.SystemActionTypes.Add(new SystemActionType
                 {
-                    Name = SystemActionTypes.SpanBeetwenEnergyAnalyse.ToString(),
+                    Id = (int)SystemActionTypes.SpanBeetwenEnergyAnalyze,
+                    Name = SystemActionTypes.SpanBeetwenEnergyAnalyze.ToString(),
                     DelayBeetwenExecuting = new TimeSpan(1, 0, 0)
                 });
 
                 context.SystemActionTypes.Add(new SystemActionType
                 {
+                    Id = (int)SystemActionTypes.GainPointsForBeingRested,
                     Name = SystemActionTypes.GainPointsForBeingRested.ToString(),
                     DelayBeetwenExecuting = new TimeSpan(1, 0, 0)
                 });
 
                 context.SystemActionTypes.Add(new SystemActionType
                 {
+                    Id = (int)SystemActionTypes.LostPointsForBeingSleepy,
                     Name = SystemActionTypes.LostPointsForBeingSleepy.ToString(),
                     DelayBeetwenExecuting = new TimeSpan(1, 0, 0)
                 });
 
                 context.SystemActionTypes.Add(new SystemActionType
                 {
+                    Id = (int)SystemActionTypes.LostPointsForSleepToMuch,
                     Name = SystemActionTypes.LostPointsForSleepToMuch.ToString(),
                     DelayBeetwenExecuting = new TimeSpan(1, 0, 0)
                 });
 
+                //Level 1
                 context.SystemActionTypes.Add(new SystemActionType
                 {
-                    Name = SystemActionTypes.LostPointsForBeingThirst.ToString(),
+                    Id = (int)SystemActionTypes.SpanBeetwenHungerAnalyze,
+                    Name = SystemActionTypes.SpanBeetwenHungerAnalyze.ToString(),
                     DelayBeetwenExecuting = new TimeSpan(1, 0, 0)
                 });
 
                 context.SystemActionTypes.Add(new SystemActionType
                 {
+                    Id = (int)SystemActionTypes.SpanBeetwenThirstAnalyze,
+                    Name = SystemActionTypes.SpanBeetwenThirstAnalyze.ToString(),
+                    DelayBeetwenExecuting = new TimeSpan(1, 0, 0)
+                });
+
+                context.SystemActionTypes.Add(new SystemActionType
+                {
+                    Id = (int)SystemActionTypes.LostPointsForBeingHungry,
                     Name = SystemActionTypes.LostPointsForBeingHungry.ToString(),
+                    DelayBeetwenExecuting = new TimeSpan(1, 0, 0)
+                });
+
+                context.SystemActionTypes.Add(new SystemActionType
+                {
+                    Id = (int)SystemActionTypes.GainPointsForBeingRestedNotHungryAndNotThirsty,
+                    Name = SystemActionTypes.GainPointsForBeingRestedNotHungryAndNotThirsty.ToString(),
+                    DelayBeetwenExecuting = new TimeSpan(1, 0, 0)
+                });
+
+                context.SystemActionTypes.Add(new SystemActionType
+                {
+                    Id = (int)SystemActionTypes.LostPointsForBeingThirst,
+                    Name = SystemActionTypes.LostPointsForBeingThirst.ToString(),
+                    DelayBeetwenExecuting = new TimeSpan(1, 0, 0)
+                });
+
+                //Level 2
+                context.SystemActionTypes.Add(new SystemActionType
+                {
+                    Id = (int)SystemActionTypes.SpanBeetwenEntertainmentAnalyze,
+                    Name = SystemActionTypes.SpanBeetwenEntertainmentAnalyze.ToString(),
                     DelayBeetwenExecuting = new TimeSpan(1, 0, 0)
                 });
 

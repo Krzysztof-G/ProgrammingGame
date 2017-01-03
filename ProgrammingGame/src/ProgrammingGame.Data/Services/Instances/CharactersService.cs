@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ProgrammingGame.Common;
 using ProgrammingGame.Common.Enums;
 using ProgrammingGame.Data.Entities;
 using ProgrammingGame.Data.Repositories.Interfaces;
 using ProgrammingGame.Data.Services.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ProgrammingGame.Data.Services.Instances
 {
@@ -91,7 +91,7 @@ namespace ProgrammingGame.Data.Services.Instances
             _indicatorsRepository.Add(energy);
             _indicatorsRepository.Save();
 
-            _systemActionsRepository.Add(new SystemAction { CharacterId = newCharacter.Id, TypeId = (int)SystemActionTypes.SpanBeetwenEnergyAnalyse, LastExecutionTime = CommonValues.ActaulaDateTime });
+            _systemActionsRepository.Add(new SystemAction { CharacterId = newCharacter.Id, TypeId = (int)SystemActionTypes.SpanBeetwenEnergyAnalyze, LastExecutionTime = CommonValues.ActaulaDateTime });
             _systemActionsRepository.Add(new SystemAction { CharacterId = newCharacter.Id, TypeId = (int)SystemActionTypes.GainPointsForBeingRested, LastExecutionTime = CommonValues.ActaulaDateTime });
             _systemActionsRepository.Add(new SystemAction { CharacterId = newCharacter.Id, TypeId = (int)SystemActionTypes.LostPointsForBeingSleepy, LastExecutionTime = CommonValues.ActaulaDateTime });
             _systemActionsRepository.Add(new SystemAction { CharacterId = newCharacter.Id, TypeId = (int)SystemActionTypes.LostPointsForSleepToMuch, LastExecutionTime = CommonValues.ActaulaDateTime });
@@ -125,6 +125,11 @@ namespace ProgrammingGame.Data.Services.Instances
             character.LastStateChangeTime = CommonValues.ActaulaDateTime;
             _charactersRepository.Edit(character);
             _charactersRepository.Save();
+        }
+
+        public bool EnoughTimeHasPassedFromPreviousStatusAnalyze(Character character, TimeSpan delayBeetwenExecuting)
+        {
+            return character.LastStateChangeTime.Add(delayBeetwenExecuting) <= CommonValues.ActaulaDateTime;
         }
     }
 }

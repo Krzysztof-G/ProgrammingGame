@@ -2,11 +2,18 @@
 {
     public enum SystemActionTypes
     {
-        SpanBeetwenEnergyAnalyse = 1,
+        //Level 0
+        SpanBeetwenEnergyAnalyze = 1,
         GainPointsForBeingRested = 2,
         LostPointsForBeingSleepy = 3,
         LostPointsForSleepToMuch = 4,
-        LostPointsForBeingThirst = 5,
-        LostPointsForBeingHungry = 6,
+        //Level 1
+        SpanBeetwenHungerAnalyze = 5,
+        SpanBeetwenThirstAnalyze = 6,
+        GainPointsForBeingRestedNotHungryAndNotThirsty = 7,
+        LostPointsForBeingThirst = 8,
+        LostPointsForBeingHungry = 9,
+        //Level 2
+        SpanBeetwenEntertainmentAnalyze = 10,
     }
 }
