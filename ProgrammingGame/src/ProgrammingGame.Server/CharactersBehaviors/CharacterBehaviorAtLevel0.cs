@@ -8,20 +8,15 @@ namespace ProgrammingGame.Server.CharactersBehaviors
 {
     public class CharacterBehaviorAtLevel0 : CharacterBehaviorBase
     {
-        private readonly long ExperienceForNextLevel = 16;
+        public CharacterBehaviorAtLevel0(Character character) : base(character)
+        {
+        }
 
-        private readonly int EnergyPointsLostWhenNotSleeping = 6;
-        private readonly int EnergyPointsGeinWhenSleeping = 12;
-
-        private readonly TimeSpan SpanBeetwenEnergyAnalyseActions = new TimeSpan(1, 0, 0);
+        #region Points Analyze
 
         private readonly int ExperienceGainForBeingRested = 1;
         private readonly int ExperienceLostForBeingSleepy = 1;
         private readonly int ExperienceLostForSleepToMuch = 1;
-
-        public CharacterBehaviorAtLevel0(Character character) : base(character)
-        {
-        }
 
         public override void GainAndLostPoints()
         {
@@ -70,6 +65,14 @@ namespace ProgrammingGame.Server.CharactersBehaviors
             }
         }
 
+        #endregion Points Analyze
+
+        #region Indicators Analyze
+
+        private readonly int EnergyPointsLostWhenNotSleeping = 6;
+        private readonly int EnergyPointsGeinWhenSleeping = 12;
+        private readonly TimeSpan SpanBeetwenEnergyAnalyseActions = new TimeSpan(1, 0, 0);
+
         public override void AnalyseIndicators()
         {
             var energy = Character.Indicators.FirstOrDefault(x => x.IndicatorTypeId == (int)IndicatorTypes.Energy);
@@ -84,14 +87,20 @@ namespace ProgrammingGame.Server.CharactersBehaviors
                 Logger.ConditionalDebug($"Character with id: {Character.Id} execute action AnalyseIndicators at {action.LastExecutionTime}.");
             }
             else if (Character.State == (int)CharacterStates.Sleep
-                && Character.LastStateChangeTime.Add(SpanBeetwenEnergyAnalyseActions) <= CommonValues.ActaulaDateTime
-                && SystemActionsService.AcionShouldBeExecuted(action))
+                     && Character.LastStateChangeTime.Add(SpanBeetwenEnergyAnalyseActions) <= CommonValues.ActaulaDateTime
+                     && SystemActionsService.AcionShouldBeExecuted(action))
             {
                 IndicatorsService.ChangeValue(energy, EnergyPointsGeinWhenSleeping);
                 CharactersService.ResetLastStateChangeTime(Character);
                 Logger.ConditionalDebug($"Character with id: {Character.Id} execute action AnalyseIndicators at {action.LastExecutionTime}.");
             }
         }
+
+        #endregion Indicators Analyze
+
+        #region Level Up
+
+        private readonly long ExperienceForNextLevel = 16;
 
         public override bool ShouldLevelUp()
         {
@@ -109,5 +118,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
             SystemActionsService.AddSystemAction(Character.Id, SystemActionTypes.LostPointsForBeingHungry);
             Logger.ConditionalDebug($"Character with id: {Character.Id} level up form {Character.Level - 1} level to {Character.Level} at {CommonValues.ActaulaDateTime}.");
         }
+
+        #endregion Level Up
     }
 }

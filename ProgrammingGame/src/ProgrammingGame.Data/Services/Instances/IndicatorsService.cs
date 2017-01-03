@@ -29,15 +29,15 @@ namespace ProgrammingGame.Data.Services.Instances
 
         public void ChangeValue(Indicator indicator, int difference)
         {
-            var indicatorTye = indicator.IndicatorType;
+            var indicatorType = indicator.IndicatorType;
 
             indicator.Value += difference;
 
-            if (indicator.Value > indicatorTye.MaxValue)
-                indicator.Value = indicatorTye.MaxValue;
+            if (indicator.Value > indicatorType.MaxValue)
+                indicator.Value = indicatorType.MaxValue;
 
-            if (indicator.Value < indicatorTye.MinValue)
-                indicator.Value = indicatorTye.MinValue;
+            if (indicator.Value < indicatorType.MinValue)
+                indicator.Value = indicatorType.MinValue;
 
             _indicatorsRepository.Edit(indicator);
             _indicatorsRepository.Save();
