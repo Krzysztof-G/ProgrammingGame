@@ -9,6 +9,7 @@
         "type": "platform",
         "version": "1.0.1"
     },
+    "NLog.Extensions.Logging": "1.0.0-rtm-alpha5",
     "ProgrammingGame.Common": "1.0.0-*",
     "ProgrammingGame.Data": "1.0.0-*"
   },

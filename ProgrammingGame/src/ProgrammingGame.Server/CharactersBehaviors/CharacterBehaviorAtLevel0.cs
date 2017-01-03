@@ -39,6 +39,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
             {
                 CharactersService.AddExperienceToCharacter(Character, ExperienceGainForBeingRested);
                 SystemActionsService.ResetLastExecutionTime(action);
+                Logger.ConditionalDebug($"Character with id: {Character.Id} execute action GainPointsForBeingRested at {action.LastExecutionTime}.");
             }
         }
 
@@ -51,6 +52,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
             {
                 CharactersService.AddExperienceToCharacter(Character, -ExperienceLostForBeingSleepy);
                 SystemActionsService.ResetLastExecutionTime(action);
+                Logger.ConditionalDebug($"Character with id: {Character.Id} execute action LostPointsForBeingSleepy at {action.LastExecutionTime}.");
             }
         }
 
@@ -64,6 +66,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
             {
                 CharactersService.AddExperienceToCharacter(Character, -ExperienceLostForSleepToMuch);
                 SystemActionsService.ResetLastExecutionTime(action);
+                Logger.ConditionalDebug($"Character with id: {Character.Id} execute action LostPointsForSleepToMuch at {action.LastExecutionTime}.");
             }
         }
 
@@ -78,6 +81,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
             {
                 IndicatorsService.ChangeValue(energy, -EnergyPointsLostWhenNotSleeping);
                 CharactersService.ResetLastStateChangeTime(Character);
+                Logger.ConditionalDebug($"Character with id: {Character.Id} execute action AnalyseIndicators at {action.LastExecutionTime}.");
             }
             else if (Character.State == (int)CharacterStates.Sleep
                 && Character.LastStateChangeTime.Add(SpanBeetwenEnergyAnalyseActions) <= CommonValues.ActaulaDateTime
@@ -85,6 +89,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
             {
                 IndicatorsService.ChangeValue(energy, EnergyPointsGeinWhenSleeping);
                 CharactersService.ResetLastStateChangeTime(Character);
+                Logger.ConditionalDebug($"Character with id: {Character.Id} execute action AnalyseIndicators at {action.LastExecutionTime}.");
             }
         }
 
@@ -102,6 +107,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
 
             SystemActionsService.AddSystemAction(Character.Id, SystemActionTypes.LostPointsForBeingThirst);
             SystemActionsService.AddSystemAction(Character.Id, SystemActionTypes.LostPointsForBeingHungry);
+            Logger.ConditionalDebug($"Character with id: {Character.Id} level up form {Character.Level - 1} level to {Character.Level} at {CommonValues.ActaulaDateTime}.");
         }
     }
 }

@@ -1,17 +1,18 @@
-﻿using ProgrammingGame.Data.Entities;
-using ProgrammingGame.Data.Repositories.Interfaces;
+﻿using NLog;
+using ProgrammingGame.Data.Entities;
+using ProgrammingGame.Data.Repositories.Instances;
+using ProgrammingGame.Data.Services.Instances;
+using ProgrammingGame.Data.Services.Interfaces;
 using ProgrammingGame.Server.CharactersBehaviors;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ProgrammingGame.Data.Repositories.Instances;
-using ProgrammingGame.Data.Services.Instances;
-using ProgrammingGame.Data.Services.Interfaces;
 
 namespace ProgrammingGame.Server
 {
     public class MainServerFlow
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly ICharactersService _charactersService;
 
         public MainServerFlow()
@@ -22,6 +23,7 @@ namespace ProgrammingGame.Server
 
         public void Run()
         {
+            _logger.ConditionalDebug("Main flow start.");
             while (true)
             {
                 var characters = GetCharacters();

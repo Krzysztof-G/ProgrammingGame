@@ -1,4 +1,5 @@
-﻿using ProgrammingGame.Data.Entities;
+﻿using NLog;
+using ProgrammingGame.Data.Entities;
 using ProgrammingGame.Data.Repositories.Instances;
 using ProgrammingGame.Data.Services.Instances;
 using ProgrammingGame.Data.Services.Interfaces;
@@ -7,6 +8,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
 {
     public abstract class CharacterBehaviorBase
     {
+        protected readonly Logger Logger;
         protected readonly ICharactersService CharactersService;
         protected readonly IIndicatorsService IndicatorsService;
         protected readonly ISystemActionsService SystemActionsService;
@@ -14,6 +16,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
 
         protected CharacterBehaviorBase(Character character)
         {
+            Logger = LogManager.GetCurrentClassLogger();
             CharactersService = new CharactersService(new CharactersRepository(), new IndicatorsRepository(), new IndicatorTypesRepository(), new SystemActionsRepository());
             IndicatorsService = new IndicatorsService(new IndicatorsRepository());
             SystemActionsService = new SystemActionsService(new SystemActionsRepository());
