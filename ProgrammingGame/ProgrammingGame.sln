@@ -22,6 +22,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ProgrammingGame.Server", "s
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ProgrammingGame.Server.Tests", "test\ProgrammingGame.Server.Tests\ProgrammingGame.Server.Tests.xproj", "{CF21CD70-B083-40B0-A87F-84E7830AC9B6}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ProgrammingGame.Api.Tests", "test\ProgrammingGame.Api.Tests\ProgrammingGame.Api.Tests.xproj", "{3765E49F-9B3B-4E8B-8FC6-4BE28CD0AE43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{CF21CD70-B083-40B0-A87F-84E7830AC9B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF21CD70-B083-40B0-A87F-84E7830AC9B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF21CD70-B083-40B0-A87F-84E7830AC9B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3765E49F-9B3B-4E8B-8FC6-4BE28CD0AE43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3765E49F-9B3B-4E8B-8FC6-4BE28CD0AE43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3765E49F-9B3B-4E8B-8FC6-4BE28CD0AE43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3765E49F-9B3B-4E8B-8FC6-4BE28CD0AE43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,5 +64,6 @@ Global
 		{3EBD289B-2624-4F69-BB87-9A01810DD71F} = {8857DC19-9EC1-49F5-AF85-4C4F6397FB3B}
 		{39D66AD6-B950-40BB-A988-F4CB67447ED8} = {8857DC19-9EC1-49F5-AF85-4C4F6397FB3B}
 		{CF21CD70-B083-40B0-A87F-84E7830AC9B6} = {DF7FB280-BBE0-4119-97B6-2855E70D5047}
+		{3765E49F-9B3B-4E8B-8FC6-4BE28CD0AE43} = {DF7FB280-BBE0-4119-97B6-2855E70D5047}
 	EndGlobalSection
 EndGlobal
