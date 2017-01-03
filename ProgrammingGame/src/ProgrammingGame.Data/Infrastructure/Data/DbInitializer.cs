@@ -37,6 +37,14 @@ namespace ProgrammingGame.Data.Infrastructure.Data
                     DefaultValue = 100,
                 });
 
+                context.IndicatorTypes.Add(new IndicatorType
+                {
+                    Name = IndicatorTypes.Fun.ToString(),
+                    MinValue = 0,
+                    MaxValue = 100,
+                    DefaultValue = 50,
+                });
+
                 context.SaveChanges();
             }
 
