@@ -1,7 +1,5 @@
 ﻿using NLog;
 using ProgrammingGame.Data.Entities;
-using ProgrammingGame.Data.Repositories.Instances;
-using ProgrammingGame.Data.Services.Instances;
 using ProgrammingGame.Data.Services.Interfaces;
 using ProgrammingGame.Server.CharactersBehaviors;
 using System.Collections.Generic;
@@ -14,10 +12,14 @@ namespace ProgrammingGame.Server
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly ICharactersService _charactersService;
+        private readonly IIndicatorsService _indicatorsService;
+        private readonly ISystemActionsService _systemActionsService;
 
-        public MainServerFlow()
+        public MainServerFlow(ICharactersService charactersService, IIndicatorsService indicatorsService, ISystemActionsService systemActionsService)
         {
-            _charactersService = new CharactersService(new CharactersRepository(), new IndicatorsRepository(), new IndicatorTypesRepository(), new SystemActionsRepository());
+            _charactersService = charactersService;
+            _indicatorsService = indicatorsService;
+            _systemActionsService = systemActionsService;
         }
 
 
@@ -52,7 +54,8 @@ namespace ProgrammingGame.Server
         {
             switch (character.Level)
             {
-                case 0: return new CharacterBehaviorAtLevel0(character);
+                case 0: return new CharacterBehaviorAtLevel0(character, _charactersService, _indicatorsService, _systemActionsService);
+                case 1: return new CharacterBehaviorAtLevel1(character, _charactersService, _indicatorsService, _systemActionsService);
                 default:
                     throw new InvalidDataException();
             }

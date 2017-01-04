@@ -3,12 +3,13 @@ using System.Linq;
 using ProgrammingGame.Common;
 using ProgrammingGame.Common.Enums;
 using ProgrammingGame.Data.Entities;
+using ProgrammingGame.Data.Services.Interfaces;
 
 namespace ProgrammingGame.Server.CharactersBehaviors
 {
     public class CharacterBehaviorAtLevel1 : CharacterBehaviorBase
     {
-        public CharacterBehaviorAtLevel1(Character character) : base(character)
+        public CharacterBehaviorAtLevel1(Character character, ICharactersService charactersService, IIndicatorsService indicatorsService, ISystemActionsService systemActionsService) : base(character, charactersService, indicatorsService, systemActionsService)
         {
         }
 
