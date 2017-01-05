@@ -16,5 +16,6 @@ namespace ProgrammingGame.Data.Services.Interfaces
         void LevelUpCharacter(Character character, long pointsSurplus);
         void ResetLastStateChangeTime(Character character);
         bool EnoughTimeHasPassedFromPreviousStatusAnalyze(Character character, TimeSpan delayBeetwenExecuting);
+        void RenewIndicator(Character character, IndicatorTypes indicatorType, int? amount = null);
     }
 }

@@ -47,7 +47,7 @@ namespace ProgrammingGame.Api.Controllers
                 ModelState.AddModelError("State", "You can go sleep, because you already a sleep.");
                 return BadRequest(ModelState);
             }
-            
+
             _charactersService.SetCharacterState(characterFromDatabase, CharacterStates.Sleep);
 
             return Ok();
@@ -68,6 +68,44 @@ namespace ProgrammingGame.Api.Controllers
             }
 
             _charactersService.SetCharacterState(characterFromDatabase, CharacterStates.Idle);
+
+            return Ok();
+        }
+
+        [HttpPatch]
+        [CharacterLevelRestrictionFilter(1)]
+        public IActionResult EatMalPreparedByMom(Guid characterKey)
+        {
+            var characterFromDatabase = _charactersService.GetCharacterByKey(characterKey);
+            if (characterFromDatabase == null)
+                return NotFound();
+
+            if (characterFromDatabase.State != (int)CharacterStates.Idle)
+            {
+                ModelState.AddModelError("State", "You can eat during sleep.");
+                return BadRequest(ModelState);
+            }
+
+            _charactersService.RenewIndicator(characterFromDatabase, IndicatorTypes.Hunger);
+
+            return Ok();
+        }
+
+        [HttpPatch]
+        [CharacterLevelRestrictionFilter(1)]
+        public IActionResult DrinkWater(Guid characterKey)
+        {
+            var characterFromDatabase = _charactersService.GetCharacterByKey(characterKey);
+            if (characterFromDatabase == null)
+                return NotFound();
+
+            if (characterFromDatabase.State != (int)CharacterStates.Idle)
+            {
+                ModelState.AddModelError("State", "You can drink during sleep.");
+                return BadRequest(ModelState);
+            }
+
+            _charactersService.RenewIndicator(characterFromDatabase, IndicatorTypes.Thirst, 40);
 
             return Ok();
         }

@@ -131,5 +131,19 @@ namespace ProgrammingGame.Data.Services.Instances
         {
             return character.LastStateChangeTime.Add(delayBeetwenExecuting) <= CommonValues.ActaulaDateTime;
         }
+
+        public void RenewIndicator(Character character, IndicatorTypes indicatorType, int? amount = null)
+        {
+            var indicator = _indicatorsRepository.Context.Indicators.Include(x => x.IndicatorType).FirstOrDefault(x => x.CharacterId == character.Id && x.IndicatorTypeId == (int)indicatorType);
+
+            indicator.Value += amount ?? indicator.IndicatorType.MaxValue;
+            if (indicator.Value > indicator.IndicatorType.MaxValue)
+                indicator.Value = indicator.IndicatorType.MaxValue;
+            else if (indicator.Value < indicator.IndicatorType.MinValue)
+                indicator.Value = indicator.IndicatorType.MinValue;
+
+            _indicatorsRepository.Edit(indicator);
+            _indicatorsRepository.Save();
+        }
     }
 }
