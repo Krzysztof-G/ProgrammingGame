@@ -2,7 +2,6 @@
 	"dependencies": {
 		"AutoMapper": "5.2.0",
 		"AutoMapper.Extensions.Microsoft.DependencyInjection": "1.2.0",
-		"Microsoft.ApplicationInsights.AspNetCore": "1.0.2",
 		"Microsoft.AspNetCore.Diagnostics": "1.1.0",
 		"Microsoft.AspNetCore.Hosting": "1.1.0",
 		"Microsoft.AspNetCore.Mvc": "1.1.0",
