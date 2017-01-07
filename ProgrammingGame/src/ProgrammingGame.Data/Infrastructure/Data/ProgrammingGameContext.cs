@@ -1,15 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ProgrammingGame.Data.Entities;
 
 namespace ProgrammingGame.Data.Infrastructure.Data
 {
-    public class ProgrammingGameContext : DbContext
+    public class ProgrammingGameContext : IdentityDbContext<User, IdentityRole<long>, long>
     {
         public ProgrammingGameContext(DbContextOptions<ProgrammingGameContext> options) : base(options)
         {
         }
 
-        public DbSet<User> Users { get; set; }
         public DbSet<Character> Characters { get; set; }
         public DbSet<Indicator> Indicators { get; set; }
         public DbSet<IndicatorType> IndicatorTypes { get; set; }
@@ -20,11 +20,54 @@ namespace ProgrammingGame.Data.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>().HasOne(x => x.Character).WithOne(x => x.User).HasForeignKey<User>(x => x.CharacterId);
+
             modelBuilder.Entity<Character>().HasMany(x => x.Indicators).WithOne(x => x.Character).HasForeignKey(x => x.CharacterId);
             modelBuilder.Entity<Character>().HasMany(x => x.OwnedItems).WithOne(x => x.Character).HasForeignKey(x => x.CharacterId);
 
             modelBuilder.Entity<Indicator>().HasKey(x => new { x.CharacterId, x.IndicatorTypeId });
             modelBuilder.Entity<OwnedItem>().HasKey(x => new { x.CharacterId, x.ItemTypeId });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("User", "security");
+
+            });
+
+            modelBuilder.Entity<IdentityUserClaim<long>>(entity =>
+            {
+                entity.ToTable("UserClaim", "security");
+                entity.Property(e => e.UserId).HasColumnName("UserId");
+
+            });
+
+            modelBuilder.Entity<IdentityUserLogin<long>>(entity =>
+            {
+                entity.ToTable("UserLogin", "security");
+            });
+
+            modelBuilder.Entity<IdentityRoleClaim<long>>(entity =>
+            {
+                entity.ToTable("RoleClaim", "security");
+                entity.Property(e => e.RoleId).HasColumnName("RoleId");
+            });
+
+            modelBuilder.Entity<IdentityUserRole<long>>(entity =>
+            {
+                entity.ToTable("UserRole", "security");
+                entity.Property(e => e.UserId).HasColumnName("UserId");
+                entity.Property(e => e.RoleId).HasColumnName("RoleId");
+
+            });
+            
+            modelBuilder.Entity<IdentityUserToken<long>>(entity =>
+            {
+                entity.ToTable("UserToken", "security");
+                entity.Property(e => e.UserId).HasColumnName("UserId");
+
+            });
         }
     }
 }

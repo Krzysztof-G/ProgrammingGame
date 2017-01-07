@@ -13,12 +13,13 @@
 	},
 
 	"dependencies": {
-		"Microsoft.EntityFrameworkCore.SqlServer": "1.1.0",
-		"Microsoft.EntityFrameworkCore.SqlServer.Design": "1.1.0",
-		"Microsoft.EntityFrameworkCore.Tools": {
-			"version": "1.0.0-preview2-final",
-			"type": "build"
-		},
+        "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.1.0",
+        "Microsoft.EntityFrameworkCore.SqlServer": "1.1.0",
+        "Microsoft.EntityFrameworkCore.SqlServer.Design": "1.1.0",
+        "Microsoft.EntityFrameworkCore.Tools": {
+            "version": "1.0.0-preview2-final",
+            "type": "build"
+        },
 		"Microsoft.NETCore.App": "1.1.0",
 		"ProgrammingGame.Common": "1.0.0-*"
 	},
