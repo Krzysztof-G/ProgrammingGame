@@ -8,8 +8,8 @@ using ProgrammingGame.Data.Infrastructure.Data;
 namespace ProgrammingGame.Data.Migrations
 {
     [DbContext(typeof(ProgrammingGameContext))]
-    [Migration("20170102091127_NAME")]
-    partial class NAME
+    [Migration("20170102091127_DelayBeetwenExecutingToSystemActionTypes")]
+    partial class DelayBeetwenExecutingToSystemActionTypes
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

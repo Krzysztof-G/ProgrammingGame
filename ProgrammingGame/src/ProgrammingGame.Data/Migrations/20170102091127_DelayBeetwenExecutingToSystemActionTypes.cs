@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProgrammingGame.Data.Migrations
 {
-    public partial class NAME : Migration
+    public partial class DelayBeetwenExecutingToSystemActionTypes : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
