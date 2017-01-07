@@ -22,49 +22,54 @@ namespace ProgrammingGame.Data.Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<User>().HasOne(x => x.Character).WithOne(x => x.User).HasForeignKey<User>(x => x.CharacterId);
+            modelBuilder.Entity<User>().HasOne(x => x.Character).WithOne(x => x.User).IsRequired(false).HasForeignKey<User>(x => x.CharacterId);
 
             modelBuilder.Entity<Character>().HasMany(x => x.Indicators).WithOne(x => x.Character).HasForeignKey(x => x.CharacterId);
             modelBuilder.Entity<Character>().HasMany(x => x.OwnedItems).WithOne(x => x.Character).HasForeignKey(x => x.CharacterId);
 
             modelBuilder.Entity<Indicator>().HasKey(x => new { x.CharacterId, x.IndicatorTypeId });
+
             modelBuilder.Entity<OwnedItem>().HasKey(x => new { x.CharacterId, x.ItemTypeId });
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.ToTable("User", "security");
+                entity.ToTable("Users", "security");
 
+            });
+
+            modelBuilder.Entity<IdentityRole<long>>(entity =>
+            {
+                entity.ToTable("Roles", "security");
             });
 
             modelBuilder.Entity<IdentityUserClaim<long>>(entity =>
             {
-                entity.ToTable("UserClaim", "security");
+                entity.ToTable("UserClaims", "security");
                 entity.Property(e => e.UserId).HasColumnName("UserId");
 
             });
 
             modelBuilder.Entity<IdentityUserLogin<long>>(entity =>
             {
-                entity.ToTable("UserLogin", "security");
+                entity.ToTable("UserLogins", "security");
             });
 
             modelBuilder.Entity<IdentityRoleClaim<long>>(entity =>
             {
-                entity.ToTable("RoleClaim", "security");
+                entity.ToTable("RoleClaims", "security");
                 entity.Property(e => e.RoleId).HasColumnName("RoleId");
             });
 
             modelBuilder.Entity<IdentityUserRole<long>>(entity =>
             {
-                entity.ToTable("UserRole", "security");
+                entity.ToTable("UserRoles", "security");
                 entity.Property(e => e.UserId).HasColumnName("UserId");
                 entity.Property(e => e.RoleId).HasColumnName("RoleId");
-
             });
-            
+
             modelBuilder.Entity<IdentityUserToken<long>>(entity =>
             {
-                entity.ToTable("UserToken", "security");
+                entity.ToTable("UserTokens", "security");
                 entity.Property(e => e.UserId).HasColumnName("UserId");
 
             });

@@ -8,9 +8,10 @@ using ProgrammingGame.Data.Infrastructure.Data;
 namespace ProgrammingGame.Data.Migrations
 {
     [DbContext(typeof(ProgrammingGameContext))]
-    partial class ProgrammingGameContextModelSnapshot : ModelSnapshot
+    [Migration("20170107180628_FixIdentityNames")]
+    partial class FixIdentityNames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -256,7 +257,7 @@ namespace ProgrammingGame.Data.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<long?>("CharacterId");
+                    b.Property<long>("CharacterId");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -384,7 +385,8 @@ namespace ProgrammingGame.Data.Migrations
                 {
                     b.HasOne("ProgrammingGame.Data.Entities.Character", "Character")
                         .WithOne("User")
-                        .HasForeignKey("ProgrammingGame.Data.Entities.User", "CharacterId");
+                        .HasForeignKey("ProgrammingGame.Data.Entities.User", "CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }

@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using ProgrammingGame.Web.Data;
-using ProgrammingGame.Web.Models;
+using ProgrammingGame.Data.Entities;
+using ProgrammingGame.Data.Infrastructure.Data;
 using ProgrammingGame.Web.Services;
 
 namespace ProgrammingGame.Web
@@ -33,11 +33,11 @@ namespace ProgrammingGame.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<ProgrammingGameContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+            services.AddIdentity<User, IdentityRole<long>>()
+                .AddEntityFrameworkStores<ProgrammingGameContext, long>()
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
