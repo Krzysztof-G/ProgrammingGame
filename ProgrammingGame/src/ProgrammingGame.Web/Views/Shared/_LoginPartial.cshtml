@@ -1,7 +1,5 @@
 ﻿@using System.Threading.Tasks
-@using Microsoft.AspNetCore.Identity
 @using ProgrammingGame.Data.Entities
-@using ProgrammingGame.Web.Models
 
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
@@ -11,7 +9,7 @@
 	<form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
 		<ul class="nav navbar-nav navbar-right">
 			<li>
-				<a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+				<a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">@UserManager.GetUserName(User)!</a>
 			</li>
 			<li>
 				<button type="submit" class="btn btn-link navbar-btn navbar-link">Log off</button>
