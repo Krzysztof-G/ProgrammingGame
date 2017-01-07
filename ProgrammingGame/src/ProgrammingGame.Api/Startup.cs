@@ -67,6 +67,7 @@ namespace ProgrammingGame.Api
 
         private void ConfigureRepositoriensInjection(IServiceCollection services)
         {
+            services.AddTransient<IUsersRepository, UsersRepository>();
             services.AddTransient<ICharactersRepository, CharactersRepository>();
             services.AddTransient<IIndicatorsRepository, IndicatorsRepository>();
             services.AddTransient<IIndicatorTypesRepository, IndicatorTypesRepository>();

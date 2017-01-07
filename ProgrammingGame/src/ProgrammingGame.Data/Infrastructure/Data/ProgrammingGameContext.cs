@@ -23,6 +23,7 @@ namespace ProgrammingGame.Data.Infrastructure.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<User>().HasOne(x => x.Character).WithOne(x => x.User).IsRequired(false).HasForeignKey<User>(x => x.CharacterId);
+            modelBuilder.Entity<User>().HasIndex(x => x.CharacterId).IsUnique(false);
 
             modelBuilder.Entity<Character>().HasMany(x => x.Indicators).WithOne(x => x.Character).HasForeignKey(x => x.CharacterId);
             modelBuilder.Entity<Character>().HasMany(x => x.OwnedItems).WithOne(x => x.Character).HasForeignKey(x => x.CharacterId);

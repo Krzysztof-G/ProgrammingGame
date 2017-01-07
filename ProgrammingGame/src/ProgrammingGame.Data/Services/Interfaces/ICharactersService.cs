@@ -8,6 +8,7 @@ namespace ProgrammingGame.Data.Services.Interfaces
     public interface ICharactersService
     {
         IEnumerable<Character> GetAllWithRelatedEntities();
+        Character GetCharacterById(long characterId);
         Character GetCharacterByKey(Guid characterKey);
         void ActiveCharacter(long characterId);
         void CreateCharacter(string characterName, long userId);

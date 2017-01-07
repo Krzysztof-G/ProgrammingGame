@@ -12,13 +12,15 @@ namespace ProgrammingGame.Data.Services.Instances
 {
     public class CharactersService : ICharactersService
     {
+        private readonly IUsersRepository _usersRepository;
         private readonly ICharactersRepository _charactersRepository;
         private readonly IIndicatorsRepository _indicatorsRepository;
         private readonly IIndicatorTypesRepository _indicatorTypesRepository;
         private readonly ISystemActionsRepository _systemActionsRepository;
 
-        public CharactersService(ICharactersRepository charactersRepository, IIndicatorsRepository indicatorsRepository, IIndicatorTypesRepository indicatorTypesRepository, ISystemActionsRepository systemActionsRepository)
+        public CharactersService(IUsersRepository usersRepository, ICharactersRepository charactersRepository, IIndicatorsRepository indicatorsRepository, IIndicatorTypesRepository indicatorTypesRepository, ISystemActionsRepository systemActionsRepository)
         {
+            _usersRepository = usersRepository;
             _charactersRepository = charactersRepository;
             _indicatorsRepository = indicatorsRepository;
             _indicatorTypesRepository = indicatorTypesRepository;
@@ -36,6 +38,11 @@ namespace ProgrammingGame.Data.Services.Instances
                 .ThenInclude(x => x.ItemType)
                 .Include(x => x.SystemActions)
                 .ThenInclude(x => x.Type);
+        }
+
+        public Character GetCharacterById(long characterId)
+        {
+            return _charactersRepository.FindBy(ch => ch.Id == characterId).FirstOrDefault();
         }
 
         public Character GetCharacterByKey(Guid characterKey)
@@ -96,6 +103,11 @@ namespace ProgrammingGame.Data.Services.Instances
             _systemActionsRepository.Add(new SystemAction { CharacterId = newCharacter.Id, TypeId = (int)SystemActionTypes.LostPointsForBeingSleepy, LastExecutionTime = CommonValues.ActaulaDateTime });
             _systemActionsRepository.Add(new SystemAction { CharacterId = newCharacter.Id, TypeId = (int)SystemActionTypes.LostPointsForSleepToMuch, LastExecutionTime = CommonValues.ActaulaDateTime });
             _systemActionsRepository.Save();
+
+            var user = _usersRepository.FindBy(x => x.Id == newCharacter.UserId).FirstOrDefault();
+            user.CharacterId = newCharacter.Id;
+            _usersRepository.Edit(user);
+            _usersRepository.Save();
         }
 
         public void SetCharacterState(Character character, CharacterStates newState)

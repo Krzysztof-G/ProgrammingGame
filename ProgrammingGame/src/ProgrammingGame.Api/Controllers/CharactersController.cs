@@ -12,10 +12,10 @@ namespace ProgrammingGame.Api.Controllers
 {
     public class CharactersController : BaseController
     {
-        private readonly ILogger<SystemController> _logger;
+        private readonly ILogger<CharactersController> _logger;
         private readonly ICharactersService _charactersService;
 
-        public CharactersController(IMapper mapper, ILogger<SystemController> logger, ICharactersService charactersService) : base(mapper)
+        public CharactersController(IMapper mapper, ILogger<CharactersController> logger, ICharactersService charactersService) : base(mapper)
         {
             _logger = logger;
             _charactersService = charactersService;
