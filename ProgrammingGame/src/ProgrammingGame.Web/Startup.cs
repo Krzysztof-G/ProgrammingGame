@@ -7,6 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ProgrammingGame.Data.Entities;
 using ProgrammingGame.Data.Infrastructure.Data;
+using ProgrammingGame.Data.Repositories.Instances;
+using ProgrammingGame.Data.Repositories.Interfaces;
+using ProgrammingGame.Data.Services.Instances;
+using ProgrammingGame.Data.Services.Interfaces;
 using ProgrammingGame.Web.Services;
 
 namespace ProgrammingGame.Web
@@ -43,9 +47,12 @@ namespace ProgrammingGame.Web
             services.AddMvc();
 
             services.AddTransient<IEmailSender, EmailService>();
+
+            ConfigureRepositoriensInjection(services);
+            ConfigureServicesInjection(services);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, ProgrammingGameContext context)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -71,6 +78,26 @@ namespace ProgrammingGame.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            DbInitializer.Initialize(context);
+        }
+
+        private void ConfigureRepositoriensInjection(IServiceCollection services)
+        {
+            services.AddTransient<IUsersRepository, UsersRepository>();
+            services.AddTransient<ICharactersRepository, CharactersRepository>();
+            services.AddTransient<IIndicatorsRepository, IndicatorsRepository>();
+            services.AddTransient<IIndicatorTypesRepository, IndicatorTypesRepository>();
+            services.AddTransient<IOwnedItemsRepository, OwnedItemsRepository>();
+            services.AddTransient<ISystemActionsRepository, SystemActionsRepository>();
+            services.AddTransient<ISystemActionTypesRepository, SystemActionTypesRepository>();
+        }
+
+        private void ConfigureServicesInjection(IServiceCollection services)
+        {
+            services.AddTransient<ICharactersService, CharactersService>();
+            services.AddTransient<IIndicatorsService, IndicatorsService>();
+            services.AddTransient<ISystemActionsService, SystemActionsService>();
         }
     }
 }

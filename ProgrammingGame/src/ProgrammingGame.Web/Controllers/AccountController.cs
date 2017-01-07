@@ -7,6 +7,7 @@ using ProgrammingGame.Web.Models.AccountViewModels;
 using ProgrammingGame.Web.Services;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using ProgrammingGame.Data.Services.Interfaces;
 
 namespace ProgrammingGame.Web.Controllers
 {
@@ -17,17 +18,20 @@ namespace ProgrammingGame.Web.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly ICharactersService _charactersService;
 
         public AccountController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             IEmailSender emailSender,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            ICharactersService charactersService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
+            _charactersService = charactersService;
         }
 
         //
@@ -100,11 +104,12 @@ namespace ProgrammingGame.Web.Controllers
                 {
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
                     // Send an email with this link
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);  
                     //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
                     //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
                     //    $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
                     await _signInManager.SignInAsync(user, isPersistent: false);
+                    _charactersService.CreateCharacter(model.CharacterName, user.Id);
                     _logger.LogInformation(3, "User created a new account with password.");
                     return RedirectToLocal(returnUrl);
                 }
@@ -328,11 +333,6 @@ namespace ProgrammingGame.Web.Controllers
             {
                 ModelState.AddModelError(string.Empty, error.Description);
             }
-        }
-
-        private Task<User> GetCurrentUserAsync()
-        {
-            return _userManager.GetUserAsync(HttpContext.User);
         }
 
         private IActionResult RedirectToLocal(string returnUrl)
