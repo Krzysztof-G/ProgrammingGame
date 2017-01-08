@@ -22,7 +22,7 @@ namespace ProgrammingGame.Data.Services.Instances
             {
                 CharacterId = characterId,
                 IndicatorTypeId = (int)indicatorType,
-                Value = _indicatorsRepository.FindBy(x => x.IndicatorTypeId == (int)indicatorType).FirstOrDefault()?.IndicatorType?.DefaultValue ?? 0
+                Value = _indicatorsRepository.Context.IndicatorTypes.FirstOrDefault(x => x.Id == (int)indicatorType)?.DefaultValue ?? 0
             });
             _indicatorsRepository.Save();
         }

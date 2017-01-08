@@ -42,7 +42,15 @@ namespace ProgrammingGame.Data.Services.Instances
 
         public Character GetCharacterById(long characterId)
         {
-            return _charactersRepository.FindBy(ch => ch.Id == characterId).FirstOrDefault();
+            return _charactersRepository
+                .Context
+                .Characters
+                .Where(ch => ch.Id == characterId)
+                .Include(x => x.Indicators)
+                .ThenInclude(x => x.IndicatorType)
+                .Include(x => x.OwnedItems)
+                .ThenInclude(x => x.ItemType)
+                .FirstOrDefault();
         }
 
         public Character GetCharacterByKey(Guid characterKey)

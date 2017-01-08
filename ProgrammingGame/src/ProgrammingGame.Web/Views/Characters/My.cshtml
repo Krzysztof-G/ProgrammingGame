@@ -1,0 +1,47 @@
+﻿@model CharacterViewModel
+
+@{
+	ViewData["Title"] = "Manage your external logins";
+}
+
+<h2>@ViewData["Title"].</h2>
+
+<div class="container">
+	<div class="jumbotron text-center">
+		<h2 class="caption">@Model.Name</h2>
+		<h3>
+			@Html.DisplayNameFor(model => model.Level): @Html.DisplayFor(model => model.Level)
+		</h3>
+		<div class="col-md-4" indicator-value="@Model.Experience" indicator-min="0" indicator-max="32"></div>
+		<h3>
+			@Html.DisplayFor(model => model.State)
+			(@Html.DisplayFor(model => model.LastStateChangeTime))
+		</h3>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">Indicators</div>
+		<div class="panel-body">
+			@for (int i = 0; i < Model.Indicators.Count(); i++)
+			{
+				<label class="col-md-2">@Model.Indicators[i].Name</label>
+				<div class="col-md-4" indicator-value="@Model.Indicators[i].Value" indicator-min="@Model.Indicators[i].MinValue" indicator-max="@Model.Indicators[i].MaxValue"></div>
+			}
+		</div>
+	</div>
+	@if (Model.OwnedItems.Any())
+	{
+		<div class="panel panel-default">
+			<div class="panel-heading">Items</div>
+			<div class="panel-body">
+				@foreach (var item in Model.OwnedItems)
+				{
+					<label class="col-md-2">@item.Name (@item.Amount)</label>
+				}
+			</div>
+		</div>
+	}
+</div>
+
+@section Scripts {
+	@{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

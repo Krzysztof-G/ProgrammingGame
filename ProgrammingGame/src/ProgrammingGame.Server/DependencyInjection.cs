@@ -21,6 +21,7 @@ namespace ProgrammingGame.Server
 
         private static void RegisterRepositoriens(ServiceCollection serviceCollection)
         {
+            serviceCollection.AddSingleton<IUsersRepository, UsersRepository>();
             serviceCollection.AddSingleton<ICharactersRepository, CharactersRepository>();
             serviceCollection.AddSingleton<IIndicatorsRepository, IndicatorsRepository>();
             serviceCollection.AddSingleton<IIndicatorTypesRepository, IndicatorTypesRepository>();
