@@ -1,0 +1,27 @@
+﻿{
+	"version": "1.0.0-*",
+	"testRunner": "xunit",
+
+	"dependencies": {
+		"dotnet-test-xunit": "2.2.0-preview2-build1029",
+		"Microsoft.NETCore.App": "1.1.0",
+		"ProgrammingGame.Common": "1.0.0-*",
+		"ProgrammingGame.Data": "1.0.0-*",
+		"ProgrammingGame.Web": "1.0.0-*",
+		"xunit": "2.2.0-beta4-build3444"
+	},
+
+	"runtimes": {
+		"win10-x64": {}
+	},
+
+	"frameworks": {
+		"netcoreapp1.0": {
+			"dependencies": {
+			},
+			"imports": [
+				"dotnet5.4"
+			]
+		}
+	}
+}
