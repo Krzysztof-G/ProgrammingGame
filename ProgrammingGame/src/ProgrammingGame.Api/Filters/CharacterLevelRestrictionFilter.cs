@@ -1,31 +1,33 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.DependencyInjection;
 using ProgrammingGame.Api.Exceptions;
 using ProgrammingGame.Common.Enums;
 using ProgrammingGame.Data.Entities;
-using ProgrammingGame.Data.Repositories.Instances;
-using ProgrammingGame.Data.Services.Instances;
 using ProgrammingGame.Data.Services.Interfaces;
 using System;
+using Microsoft.Extensions.Logging;
 
 namespace ProgrammingGame.Api.Filters
 {
     public class CharacterLevelRestrictionFilterAttribute : ActionFilterAttribute
     {
         private readonly int _minCharacterLevel;
-        private readonly ICharactersService _charactersService;
+        private ILogger<CharacterLevelRestrictionFilterAttribute> _logger;
 
         public CharacterLevelRestrictionFilterAttribute(int minCharacterLevel)
         {
-            _charactersService = new CharactersService(new UsersRepository(), new CharactersRepository(), new IndicatorsRepository(), new IndicatorTypesRepository(), new SystemActionsRepository());
             _minCharacterLevel = minCharacterLevel;
         }
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
+            ICharactersService charactersService = context.HttpContext.RequestServices.GetService<ICharactersService>();
+            _logger = context.HttpContext.RequestServices.GetService<ILoggerFactory>().CreateLogger<CharacterLevelRestrictionFilterAttribute>();
+
             string characterKeyArgument = context.ActionArguments["characterKey"].ToString();
             CheckWhateverCharacterKeyIsOnArgumentList(characterKeyArgument);
             Guid characterKey = GetCharacterKey(characterKeyArgument);
-            var character = _charactersService.GetCharacterByKey(characterKey);
+            var character = charactersService.GetCharacterByKey(characterKey);
             CheckWhateverCharacterExists(character);
             CheckWhateverCharacterHasSufficientLevel(character);
         }
@@ -34,6 +36,7 @@ namespace ProgrammingGame.Api.Filters
         {
             if (string.IsNullOrEmpty(characterKeyArgument))
             {
+                _logger.LogDebug("Missing character key argument.");
                 throw new ApiException("Missing character key argument.", ErrorCodes.MissingArgument);
             }
         }
@@ -43,6 +46,7 @@ namespace ProgrammingGame.Api.Filters
             Guid characterKey;
             if (!Guid.TryParse(characterKeyArgument, out characterKey))
             {
+                _logger.LogDebug("Invalid character key format.");
                 throw new ApiException("Invalid character key format.", ErrorCodes.WrongArgumentFormat);
             }
 
@@ -53,6 +57,7 @@ namespace ProgrammingGame.Api.Filters
         {
             if (character.Level < _minCharacterLevel)
             {
+                _logger.LogDebug("Level of your character is to low for this action.");
                 throw new ActionNotAvailableException("Level of your character is to low for this action.", ErrorCodes.CharacterDoesNotMeetRequirements);
             }
         }
@@ -61,6 +66,7 @@ namespace ProgrammingGame.Api.Filters
         {
             if (character == null)
             {
+                _logger.LogDebug("Invalid character key.");
                 throw new ActionNotAvailableException("Invalid character key.", ErrorCodes.NonExistentEntity);
             }
         }
