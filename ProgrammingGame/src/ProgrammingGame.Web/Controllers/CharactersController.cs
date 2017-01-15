@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ProgrammingGame.Data.Entities;
@@ -17,6 +18,7 @@ namespace ProgrammingGame.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult My()
         {
             var user = GetCurrentUser();
