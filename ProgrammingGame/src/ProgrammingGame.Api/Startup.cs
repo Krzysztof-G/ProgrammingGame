@@ -8,9 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using ProgrammingGame.Api.Middleware;
+using ProgrammingGame.Data.Infrastructure;
+using ProgrammingGame.Data.Infrastructure.Context;
 using ProgrammingGame.Data.Infrastructure.Data;
-using ProgrammingGame.Data.Repositories.Instances;
-using ProgrammingGame.Data.Repositories.Interfaces;
 using ProgrammingGame.Data.Services.Instances;
 using ProgrammingGame.Data.Services.Interfaces;
 
@@ -39,7 +39,7 @@ namespace ProgrammingGame.Api
             services.AddEntityFramework(Configuration.GetConnectionString("DefaultConnection"));
             services.AddAutoMapper();
 
-            ConfigureRepositoriensInjection(services);
+            ConfigureInfrastructureInjection(services);
             ConfigureServicesInjection(services);
         }
 
@@ -65,15 +65,10 @@ namespace ProgrammingGame.Api
             DbInitializer.Initialize(context);
         }
 
-        private void ConfigureRepositoriensInjection(IServiceCollection services)
+        private void ConfigureInfrastructureInjection(IServiceCollection services)
         {
-            services.AddTransient<IUsersRepository, UsersRepository>();
-            services.AddTransient<ICharactersRepository, CharactersRepository>();
-            services.AddTransient<IIndicatorsRepository, IndicatorsRepository>();
-            services.AddTransient<IIndicatorTypesRepository, IndicatorTypesRepository>();
-            services.AddTransient<IOwnedItemsRepository, OwnedItemsRepository>();
-            services.AddTransient<ISystemActionsRepository, SystemActionsRepository>();
-            services.AddTransient<ISystemActionTypesRepository, SystemActionTypesRepository>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IEntitiesContext, ProgrammingGameContext>();
         }
 
         private void ConfigureServicesInjection(IServiceCollection services)

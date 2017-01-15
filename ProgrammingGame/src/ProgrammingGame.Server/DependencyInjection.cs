@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
-using ProgrammingGame.Data.Repositories.Instances;
-using ProgrammingGame.Data.Repositories.Interfaces;
 using ProgrammingGame.Data.Services.Instances;
 using ProgrammingGame.Data.Services.Interfaces;
+using ProgrammingGame.Data.Infrastructure;
+using ProgrammingGame.Data.Infrastructure.Context;
 
 namespace ProgrammingGame.Server
 {
@@ -14,20 +14,15 @@ namespace ProgrammingGame.Server
         static DependencyInjection()
         {
             var serviceCollection = new ServiceCollection();
-            RegisterRepositoriens(serviceCollection);
+            Infrastructure(serviceCollection);
             RegisterServices(serviceCollection);
             Provider = serviceCollection.BuildServiceProvider();
         }
 
-        private static void RegisterRepositoriens(ServiceCollection serviceCollection)
+        private static void Infrastructure(ServiceCollection serviceCollection)
         {
-            serviceCollection.AddSingleton<IUsersRepository, UsersRepository>();
-            serviceCollection.AddSingleton<ICharactersRepository, CharactersRepository>();
-            serviceCollection.AddSingleton<IIndicatorsRepository, IndicatorsRepository>();
-            serviceCollection.AddSingleton<IIndicatorTypesRepository, IndicatorTypesRepository>();
-            serviceCollection.AddSingleton<IOwnedItemsRepository, OwnedItemsRepository>();
-            serviceCollection.AddSingleton<ISystemActionsRepository, SystemActionsRepository>();
-            serviceCollection.AddSingleton<ISystemActionTypesRepository, SystemActionTypesRepository>();
+            serviceCollection.AddTransient<IUnitOfWork, UnitOfWork>();
+            serviceCollection.AddTransient<IEntitiesContext, ProgrammingGameContext>();
         }
 
         private static void RegisterServices(ServiceCollection serviceCollection)

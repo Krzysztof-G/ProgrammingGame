@@ -2,7 +2,7 @@
 
 namespace ProgrammingGame.Data.Entities
 {
-    public class SystemAction
+    public class SystemAction : IEntity
     {
         public long Id { get; set; }
         public DateTime LastExecutionTime { get; set; }

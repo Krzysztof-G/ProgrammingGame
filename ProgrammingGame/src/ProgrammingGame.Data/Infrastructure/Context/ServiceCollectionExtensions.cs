@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ProgrammingGame.Data.Infrastructure.Data
+namespace ProgrammingGame.Data.Infrastructure.Context
 {
     public static class ServiceCollectionExtensions
     {

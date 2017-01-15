@@ -1,8 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ProgrammingGame.Common;
+﻿using ProgrammingGame.Common;
 using ProgrammingGame.Common.Enums;
 using ProgrammingGame.Data.Entities;
-using ProgrammingGame.Data.Repositories.Interfaces;
+using ProgrammingGame.Data.Infrastructure;
 using ProgrammingGame.Data.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,76 +11,80 @@ namespace ProgrammingGame.Data.Services.Instances
 {
     public class CharactersService : ICharactersService
     {
-        private readonly IUsersRepository _usersRepository;
-        private readonly ICharactersRepository _charactersRepository;
-        private readonly IIndicatorsRepository _indicatorsRepository;
-        private readonly IIndicatorTypesRepository _indicatorTypesRepository;
-        private readonly ISystemActionsRepository _systemActionsRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CharactersService(IUsersRepository usersRepository, ICharactersRepository charactersRepository, IIndicatorsRepository indicatorsRepository, IIndicatorTypesRepository indicatorTypesRepository, ISystemActionsRepository systemActionsRepository)
+        public CharactersService(IUnitOfWork unitOfWork)
         {
-            _usersRepository = usersRepository;
-            _charactersRepository = charactersRepository;
-            _indicatorsRepository = indicatorsRepository;
-            _indicatorTypesRepository = indicatorTypesRepository;
-            _systemActionsRepository = systemActionsRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<Character> GetAllWithRelatedEntities()
         {
-            return _charactersRepository
-                .Context
-                .Characters
-                .Include(x => x.Indicators)
-                .ThenInclude(x => x.IndicatorType)
-                .Include(x => x.OwnedItems)
-                .ThenInclude(x => x.ItemType)
-                .Include(x => x.SystemActions)
-                .ThenInclude(x => x.Type);
+            var charactersRepository = _unitOfWork.Repository<Character>();
+            var indicatorsRepository = _unitOfWork.Repository<Indicator>();
+            var ownedItemsRepository = _unitOfWork.Repository<OwnedItem>();
+            var systemActionsRepository = _unitOfWork.Repository<SystemAction>();
+
+            var characters = charactersRepository.GetAllWithIncluding();
+
+            foreach (var character in characters)
+            {
+                character.Indicators = indicatorsRepository.FindByWithIncluding(i => i.CharacterId == character.Id, i => i.IndicatorType).ToList();
+                character.OwnedItems = ownedItemsRepository.FindByWithIncluding(oi => oi.CharacterId == character.Id, oi => oi.ItemType).ToList();
+                character.SystemActions = systemActionsRepository.FindByWithIncluding(sa => sa.CharacterId == character.Id, sa => sa.Type).ToList();
+            }
+
+            return characters;
         }
 
-        public Character GetCharacterById(long characterId)
+        public Character GetCharacterByIdWithIndicatorsAndItems(long characterId)
         {
-            return _charactersRepository
-                .Context
-                .Characters
-                .Where(ch => ch.Id == characterId)
-                .Include(x => x.Indicators)
-                .ThenInclude(x => x.IndicatorType)
-                .Include(x => x.OwnedItems)
-                .ThenInclude(x => x.ItemType)
-                .FirstOrDefault();
+            var charactersRepository = _unitOfWork.Repository<Character>();
+            var indicatorsRepository = _unitOfWork.Repository<Indicator>();
+            var ownedItemsRepository = _unitOfWork.Repository<OwnedItem>();
+
+            var character = charactersRepository.GetSingle(ch => ch.Id == characterId);
+
+            character.Indicators = indicatorsRepository.FindByWithIncluding(i => i.CharacterId == characterId, i => i.IndicatorType).ToList();
+            character.OwnedItems = ownedItemsRepository.FindByWithIncluding(oi => oi.CharacterId == characterId, oi => oi.ItemType).ToList();
+
+            return character;
         }
 
         public Character GetCharacterByKey(Guid characterKey)
         {
-            return _charactersRepository.FindBy(ch => ch.Key == characterKey).FirstOrDefault();
+            var charactersRepository = _unitOfWork.Repository<Character>();
+            return charactersRepository.GetSingle(ch => ch.Key == characterKey);
         }
 
         public void ActiveCharacter(long characterId)
         {
-            var character = _charactersRepository
-                .Context
-                .Characters
-                .Include(x => x.SystemActions)
-                .ThenInclude(x => x.Type)
-                .First(x => x.Id == characterId);
+            var charactersRepository = _unitOfWork.Repository<Character>();
+            var systemActionsRepository = _unitOfWork.Repository<SystemAction>();
+
+            var character = charactersRepository.GetSingleWithIncluding(ch => ch.Id == characterId, ch => ch.SystemActions);
 
             character.IsActive = true;
             character.LastStateChangeTime = CommonValues.ActaulaDateTime;
+            charactersRepository.Update(character);
 
             foreach (var systemAction in character.SystemActions)
             {
                 systemAction.LastExecutionTime = CommonValues.ActaulaDateTime;
-                _systemActionsRepository.Edit(systemAction);
+                systemActionsRepository.Update(systemAction);
             }
 
-            _systemActionsRepository.Save();
-            _charactersRepository.Save();
+            _unitOfWork.SaveChanges();
         }
 
         public void CreateCharacter(string characterName, long userId)
         {
+            var charactersRepository = _unitOfWork.Repository<Character>();
+            var indicatorsRepository = _unitOfWork.Repository<Indicator>();
+            var indicatorTypesRepository = _unitOfWork.Repository<IndicatorType>();
+            var systemActionsRepository = _unitOfWork.Repository<SystemAction>();
+            var usersRepository = _unitOfWork.Repository<User>();
+
             var newCharacter = new Character
             {
                 Key = Guid.NewGuid(),
@@ -94,57 +97,67 @@ namespace ProgrammingGame.Data.Services.Instances
                 Cash = 0,
                 UserId = userId,
             };
-            _charactersRepository.Add(newCharacter);
-            _charactersRepository.Save();
+            charactersRepository.Insert(newCharacter);
+            _unitOfWork.SaveChanges();
 
             var energy = new Indicator
             {
                 CharacterId = newCharacter.Id,
                 IndicatorTypeId = (int)IndicatorTypes.Energy,
-                Value = _indicatorTypesRepository.FindBy(x => x.Id == (int)IndicatorTypes.Energy).FirstOrDefault()?.DefaultValue ?? 0
+                Value = indicatorTypesRepository.GetSingle(x => x.Id == (int)IndicatorTypes.Energy).DefaultValue
             };
-            _indicatorsRepository.Add(energy);
-            _indicatorsRepository.Save();
+            indicatorsRepository.Insert(energy);
 
-            _systemActionsRepository.Add(new SystemAction { CharacterId = newCharacter.Id, TypeId = (int)SystemActionTypes.SpanBeetwenEnergyAnalyze, LastExecutionTime = CommonValues.ActaulaDateTime });
-            _systemActionsRepository.Add(new SystemAction { CharacterId = newCharacter.Id, TypeId = (int)SystemActionTypes.GainPointsForBeingRested, LastExecutionTime = CommonValues.ActaulaDateTime });
-            _systemActionsRepository.Add(new SystemAction { CharacterId = newCharacter.Id, TypeId = (int)SystemActionTypes.LostPointsForBeingSleepy, LastExecutionTime = CommonValues.ActaulaDateTime });
-            _systemActionsRepository.Add(new SystemAction { CharacterId = newCharacter.Id, TypeId = (int)SystemActionTypes.LostPointsForSleepToMuch, LastExecutionTime = CommonValues.ActaulaDateTime });
-            _systemActionsRepository.Save();
+            systemActionsRepository.Insert(new SystemAction { CharacterId = newCharacter.Id, TypeId = (int)SystemActionTypes.SpanBeetwenEnergyAnalyze, LastExecutionTime = CommonValues.ActaulaDateTime });
+            systemActionsRepository.Insert(new SystemAction { CharacterId = newCharacter.Id, TypeId = (int)SystemActionTypes.GainPointsForBeingRested, LastExecutionTime = CommonValues.ActaulaDateTime });
+            systemActionsRepository.Insert(new SystemAction { CharacterId = newCharacter.Id, TypeId = (int)SystemActionTypes.LostPointsForBeingSleepy, LastExecutionTime = CommonValues.ActaulaDateTime });
+            systemActionsRepository.Insert(new SystemAction { CharacterId = newCharacter.Id, TypeId = (int)SystemActionTypes.LostPointsForSleepToMuch, LastExecutionTime = CommonValues.ActaulaDateTime });
 
-            var user = _usersRepository.FindBy(x => x.Id == newCharacter.UserId).FirstOrDefault();
+            var user = usersRepository.GetSingle(x => x.Id == newCharacter.UserId);
             user.CharacterId = newCharacter.Id;
-            _usersRepository.Edit(user);
-            _usersRepository.Save();
+
+            usersRepository.Update(user);
+            _unitOfWork.SaveChanges();
         }
 
         public void SetCharacterState(Character character, CharacterStates newState)
         {
+            var charactersRepository = _unitOfWork.Repository<Character>();
+
             character.State = (int)newState;
-            _charactersRepository.Edit(character);
-            _charactersRepository.Save();
+
+            charactersRepository.Update(character);
+            _unitOfWork.SaveChanges();
         }
 
         public void AddExperienceToCharacter(Character character, long experienceToAdd)
         {
+            var charactersRepository = _unitOfWork.Repository<Character>();
+
             character.Experience += experienceToAdd;
-            _charactersRepository.Edit(character);
-            _charactersRepository.Save();
+
+            charactersRepository.Update(character);
+            _unitOfWork.SaveChanges();
         }
 
         public void LevelUpCharacter(Character character, long pointsSurplus)
         {
+            var charactersRepository = _unitOfWork.Repository<Character>();
+
             character.Level++;
             character.Experience = pointsSurplus;
-            _charactersRepository.Edit(character);
-            _charactersRepository.Save();
+
+            charactersRepository.Update(character);
+            _unitOfWork.SaveChanges();
         }
 
         public void ResetLastStateChangeTime(Character character)
         {
+            var charactersRepository = _unitOfWork.Repository<Character>();
+
             character.LastStateChangeTime = CommonValues.ActaulaDateTime;
-            _charactersRepository.Edit(character);
-            _charactersRepository.Save();
+            charactersRepository.Update(character);
+            _unitOfWork.SaveChanges();
         }
 
         public bool EnoughTimeHasPassedFromPreviousStatusAnalyze(Character character, TimeSpan delayBeetwenExecuting)
@@ -152,9 +165,11 @@ namespace ProgrammingGame.Data.Services.Instances
             return character.LastStateChangeTime.Add(delayBeetwenExecuting) <= CommonValues.ActaulaDateTime;
         }
 
-        public void RenewIndicator(Character character, IndicatorTypes indicatorType, int? amount = null)
+        public void RenewIndicator(long characterId, IndicatorTypes indicatorType, int? amount = null)
         {
-            var indicator = _indicatorsRepository.Context.Indicators.Include(x => x.IndicatorType).FirstOrDefault(x => x.CharacterId == character.Id && x.IndicatorTypeId == (int)indicatorType);
+            var indicatorsRepository = _unitOfWork.Repository<Indicator>();
+
+            var indicator = indicatorsRepository.GetSingleWithIncluding(x => x.CharacterId == characterId, x => x.IndicatorType);
 
             indicator.Value += amount ?? indicator.IndicatorType.MaxValue;
             if (indicator.Value > indicator.IndicatorType.MaxValue)
@@ -162,8 +177,8 @@ namespace ProgrammingGame.Data.Services.Instances
             else if (indicator.Value < indicator.IndicatorType.MinValue)
                 indicator.Value = indicator.IndicatorType.MinValue;
 
-            _indicatorsRepository.Edit(indicator);
-            _indicatorsRepository.Save();
+            indicatorsRepository.Update(indicator);
+            _unitOfWork.SaveChanges();
         }
     }
 }

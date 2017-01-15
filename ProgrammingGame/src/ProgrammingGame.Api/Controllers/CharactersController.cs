@@ -86,7 +86,7 @@ namespace ProgrammingGame.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            _charactersService.RenewIndicator(characterFromDatabase, IndicatorTypes.Hunger);
+            _charactersService.RenewIndicator(characterFromDatabase.Id, IndicatorTypes.Hunger);
 
             return Ok();
         }
@@ -105,7 +105,7 @@ namespace ProgrammingGame.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            _charactersService.RenewIndicator(characterFromDatabase, IndicatorTypes.Thirst, 40);
+            _charactersService.RenewIndicator(characterFromDatabase.Id, IndicatorTypes.Thirst, 40);
 
             return Ok();
         }

@@ -1,6 +1,6 @@
 ﻿namespace ProgrammingGame.Data.Entities
 {
-    public class OwnedItem
+    public class OwnedItem : IEntity
     {
         public int ItemTypeId { get; set; }
         public ItemType ItemType { get; set; }

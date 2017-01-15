@@ -2,21 +2,39 @@
 using Microsoft.EntityFrameworkCore;
 using ProgrammingGame.Data.Entities;
 
-namespace ProgrammingGame.Data.Infrastructure.Data
+namespace ProgrammingGame.Data.Infrastructure.Context
 {
-    public class ProgrammingGameContext : IdentityDbContext<User, IdentityRole<long>, long>
+    public class ProgrammingGameContext : IdentityDbContext<User, IdentityRole<long>, long>, IEntitiesContext
     {
         public ProgrammingGameContext(DbContextOptions<ProgrammingGameContext> options) : base(options)
         {
         }
+        
+        public DbSet<TEntity> Set<TEntity>() where TEntity : class, IEntity
+        {
+            return base.Set<TEntity>();
+        }
 
-        public DbSet<Character> Characters { get; set; }
-        public DbSet<Indicator> Indicators { get; set; }
-        public DbSet<IndicatorType> IndicatorTypes { get; set; }
-        public DbSet<ItemType> Item { get; set; }
-        public DbSet<OwnedItem> OwnedItems { get; set; }
-        public DbSet<SystemAction> SystemActions { get; set; }
-        public DbSet<SystemActionType> SystemActionTypes { get; set; }
+        public void SetAsAdded<TEntity>(TEntity entity) where TEntity : class, IEntity
+        {
+            UpdateEntityState<TEntity>(entity, EntityState.Added);
+        }
+
+        public void SetAsModified<TEntity>(TEntity entity) where TEntity : class, IEntity
+        {
+            UpdateEntityState<TEntity>(entity, EntityState.Modified);
+        }
+
+        public void SetAsDeleted<TEntity>(TEntity entity) where TEntity : class, IEntity
+        {
+            UpdateEntityState<TEntity>(entity, EntityState.Deleted);
+        }
+
+        private void UpdateEntityState<TEntity>(TEntity entity, EntityState entityState) where TEntity : class, IEntity
+        {
+            var dbEntityEntry = Entry<TEntity>(entity);
+            dbEntityEntry.State = entityState;
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

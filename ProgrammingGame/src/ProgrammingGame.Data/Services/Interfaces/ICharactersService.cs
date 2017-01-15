@@ -8,7 +8,7 @@ namespace ProgrammingGame.Data.Services.Interfaces
     public interface ICharactersService
     {
         IEnumerable<Character> GetAllWithRelatedEntities();
-        Character GetCharacterById(long characterId);
+        Character GetCharacterByIdWithIndicatorsAndItems(long characterId);
         Character GetCharacterByKey(Guid characterKey);
         void ActiveCharacter(long characterId);
         void CreateCharacter(string characterName, long userId);
@@ -17,6 +17,6 @@ namespace ProgrammingGame.Data.Services.Interfaces
         void LevelUpCharacter(Character character, long pointsSurplus);
         void ResetLastStateChangeTime(Character character);
         bool EnoughTimeHasPassedFromPreviousStatusAnalyze(Character character, TimeSpan delayBeetwenExecuting);
-        void RenewIndicator(Character character, IndicatorTypes indicatorType, int? amount = null);
+        void RenewIndicator(long characterId, IndicatorTypes indicatorType, int? amount = null);
     }
 }

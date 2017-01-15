@@ -1,34 +1,36 @@
-﻿using System.Linq;
-using ProgrammingGame.Common.Enums;
+﻿using ProgrammingGame.Common.Enums;
 using ProgrammingGame.Data.Entities;
-using ProgrammingGame.Data.Repositories.Interfaces;
 using ProgrammingGame.Data.Services.Interfaces;
+using ProgrammingGame.Data.Infrastructure;
 
 namespace ProgrammingGame.Data.Services.Instances
 {
     public class IndicatorsService : IIndicatorsService
     {
-        private readonly IIndicatorsRepository _indicatorsRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public IndicatorsService(IIndicatorsRepository indicatorsRepository)
+        public IndicatorsService(IUnitOfWork unitOfWork)
         {
-            _indicatorsRepository = indicatorsRepository;
+            _unitOfWork = unitOfWork;
         }
-
 
         public void AddIndicator(long characterId, IndicatorTypes indicatorType)
         {
-            _indicatorsRepository.Add(new Indicator
+            var indicatorsRepository = _unitOfWork.Repository<Indicator>();
+            var indicatorsTypesRepository = _unitOfWork.Repository<IndicatorType>();
+
+            indicatorsRepository.Insert(new Indicator
             {
                 CharacterId = characterId,
                 IndicatorTypeId = (int)indicatorType,
-                Value = _indicatorsRepository.Context.IndicatorTypes.FirstOrDefault(x => x.Id == (int)indicatorType)?.DefaultValue ?? 0
+                Value = indicatorsTypesRepository.GetSingle(x => x.Id == (int)indicatorType).DefaultValue
             });
-            _indicatorsRepository.Save();
+            _unitOfWork.SaveChanges();
         }
 
         public void ChangeValue(Indicator indicator, int difference)
         {
+            var indicatorsRepository = _unitOfWork.Repository<Indicator>();
             var indicatorType = indicator.IndicatorType;
 
             indicator.Value += difference;
@@ -39,8 +41,8 @@ namespace ProgrammingGame.Data.Services.Instances
             if (indicator.Value < indicatorType.MinValue)
                 indicator.Value = indicatorType.MinValue;
 
-            _indicatorsRepository.Edit(indicator);
-            _indicatorsRepository.Save();
+            indicatorsRepository.Update(indicator);
+            _unitOfWork.SaveChanges();
         }
     }
 }

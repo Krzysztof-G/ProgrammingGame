@@ -1,36 +1,38 @@
 ﻿using ProgrammingGame.Common;
 using ProgrammingGame.Common.Enums;
 using ProgrammingGame.Data.Entities;
-using ProgrammingGame.Data.Repositories.Interfaces;
+using ProgrammingGame.Data.Infrastructure;
 using ProgrammingGame.Data.Services.Interfaces;
 
 namespace ProgrammingGame.Data.Services.Instances
 {
     public class SystemActionsService : ISystemActionsService
     {
-        private readonly ISystemActionsRepository _systemActionsRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public SystemActionsService(ISystemActionsRepository systemActionsRepository)
+        public SystemActionsService(IUnitOfWork unitOfWork)
         {
-            _systemActionsRepository = systemActionsRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public void AddSystemAction(long characterId, SystemActionTypes systemActionType)
         {
-            _systemActionsRepository.Add(new SystemAction
+            var systemActionsRepository = _unitOfWork.Repository<SystemAction>();
+            systemActionsRepository.Insert(new SystemAction
             {
                 CharacterId = characterId,
                 TypeId = (int)systemActionType,
-                LastExecutionTime = Common.CommonValues.ActaulaDateTime
+                LastExecutionTime = CommonValues.ActaulaDateTime
             });
-            _systemActionsRepository.Save();
+            _unitOfWork.SaveChanges();
         }
 
         public void ResetLastExecutionTime(SystemAction action)
         {
-            action.LastExecutionTime = Common.CommonValues.ActaulaDateTime;
-            _systemActionsRepository.Edit(action);
-            _systemActionsRepository.Save();
+            var systemActionsRepository = _unitOfWork.Repository<SystemAction>();
+            action.LastExecutionTime = CommonValues.ActaulaDateTime;
+            systemActionsRepository.Update(action);
+            _unitOfWork.SaveChanges();
         }
 
         public bool AcionShouldBeExecuted(SystemAction action)

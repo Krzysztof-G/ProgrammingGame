@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ProgrammingGame.Data.Entities
 {
-    public class Character
+    public class Character : IEntity
     {
         public long Id { get; set; }
         public bool IsActive { get; set; }

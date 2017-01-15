@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace ProgrammingGame.Data.Infrastructure.Data
+namespace ProgrammingGame.Data.Infrastructure.Context
 {
     public class ProgrammingGameContextFactory : IDbContextFactory<ProgrammingGameContext>
     {

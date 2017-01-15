@@ -1,6 +1,6 @@
 ﻿namespace ProgrammingGame.Data.Entities
 {
-    public class Indicator
+    public class Indicator : IEntity
     {
         public int IndicatorTypeId { get; set; }
         public virtual IndicatorType IndicatorType { get; set; }
