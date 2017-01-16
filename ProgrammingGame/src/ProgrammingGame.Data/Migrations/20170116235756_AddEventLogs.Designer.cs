@@ -8,9 +8,10 @@ using ProgrammingGame.Data.Infrastructure.Context;
 namespace ProgrammingGame.Data.Migrations
 {
     [DbContext(typeof(ProgrammingGameContext))]
-    partial class ProgrammingGameContextModelSnapshot : ModelSnapshot
+    [Migration("20170116235756_AddEventLogs")]
+    partial class AddEventLogs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")

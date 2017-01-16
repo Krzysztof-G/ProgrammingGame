@@ -45,6 +45,7 @@ namespace ProgrammingGame.Data.Infrastructure.Context
 
             modelBuilder.Entity<Character>().HasMany(x => x.Indicators).WithOne(x => x.Character).HasForeignKey(x => x.CharacterId);
             modelBuilder.Entity<Character>().HasMany(x => x.OwnedItems).WithOne(x => x.Character).HasForeignKey(x => x.CharacterId);
+            modelBuilder.Entity<Character>().HasMany(x => x.EventLogs).WithOne(x => x.Character).HasForeignKey(x => x.CharacterId);
 
             modelBuilder.Entity<Indicator>().HasKey(x => new { x.CharacterId, x.IndicatorTypeId });
 
@@ -53,7 +54,6 @@ namespace ProgrammingGame.Data.Infrastructure.Context
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("Users", "security");
-
             });
 
             modelBuilder.Entity<IdentityRole<long>>(entity =>

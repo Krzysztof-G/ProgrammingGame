@@ -1,6 +1,6 @@
-﻿using ProgrammingGame.Common.Enums;
+﻿using Microsoft.EntityFrameworkCore;
+using ProgrammingGame.Common.Enums;
 using ProgrammingGame.Data.Entities;
-using ProgrammingGame.Data.Infrastructure.Context;
 using System;
 using System.Linq;
 
@@ -8,18 +8,20 @@ namespace ProgrammingGame.Data.Infrastructure.Data
 {
     public static class DbInitializer
     {
-        public static void Initialize(ProgrammingGameContext context)
+        public static void Initialize(DbContext context)
         {
             context.Database.EnsureCreated();
 
             IndicatorTypesInitialization(context);
             SystemActionTypesInitialization(context);
+            EventLogTypesInitialization(context);
         }
 
-        private static void IndicatorTypesInitialization(ProgrammingGameContext context)
+        private static void IndicatorTypesInitialization(DbContext context)
         {
             if (context.Set<IndicatorType>().Any()) return;
 
+            //Level 0
             context.Set<IndicatorType>().Add(new IndicatorType
             {
                 Name = IndicatorTypes.Energy.ToString(),
@@ -28,6 +30,7 @@ namespace ProgrammingGame.Data.Infrastructure.Data
                 DefaultValue = 100,
             });
 
+            //Level 1
             context.Set<IndicatorType>().Add(new IndicatorType
             {
                 Name = IndicatorTypes.Thirst.ToString(),
@@ -44,6 +47,7 @@ namespace ProgrammingGame.Data.Infrastructure.Data
                 DefaultValue = 100,
             });
 
+            //Level 2
             context.Set<IndicatorType>().Add(new IndicatorType
             {
                 Name = IndicatorTypes.Entertainment.ToString(),
@@ -54,7 +58,7 @@ namespace ProgrammingGame.Data.Infrastructure.Data
 
             context.SaveChanges();
         }
-        private static void SystemActionTypesInitialization(ProgrammingGameContext context)
+        private static void SystemActionTypesInitialization(DbContext context)
         {
             if (context.Set<SystemActionType>().Any()) return;
 
@@ -119,6 +123,33 @@ namespace ProgrammingGame.Data.Infrastructure.Data
             {
                 Name = SystemActionTypes.SpanBeetwenEntertainmentAnalyze.ToString(),
                 DelayBeetwenExecuting = new TimeSpan(1, 0, 0)
+            });
+
+            context.SaveChanges();
+        }
+
+        private static void EventLogTypesInitialization(DbContext context)
+        {
+            if (context.Set<EventLogType>().Any()) return;
+
+            context.Set<EventLogType>().Add(new EventLogType
+            {
+                Name = EventLogTypes.GainExp.ToString()
+            });
+
+            context.Set<EventLogType>().Add(new EventLogType
+            {
+                Name = EventLogTypes.LostExp.ToString()
+            });
+
+            context.Set<EventLogType>().Add(new EventLogType
+            {
+                Name = EventLogTypes.LevelUp.ToString()
+            });
+
+            context.Set<EventLogType>().Add(new EventLogType
+            {
+                Name = EventLogTypes.IndicatorHasChanged.ToString()
             });
 
             context.SaveChanges();

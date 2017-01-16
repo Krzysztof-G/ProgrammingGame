@@ -20,6 +20,9 @@ namespace ProgrammingGame.Web.Core
             CreateMap<OwnedItem, OwnedItemViewModel>()
                 .ForMember(d => d.Name, o => o.MapFrom(s => s.ItemType.Name))
                 .ForMember(d => d.Price, o => o.MapFrom(s => s.ItemType.Price));
+
+            CreateMap<EventLog, EventLogViewModel>()
+                .ForMember(d => d.Type, o => o.MapFrom(s => (EventLogTypes)s.TypeId));
         }
     }
 }

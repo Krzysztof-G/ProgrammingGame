@@ -37,16 +37,18 @@ namespace ProgrammingGame.Data.Services.Instances
             return characters;
         }
 
-        public Character GetCharacterByIdWithIndicatorsAndItems(long characterId)
+        public Character GetCharacterByIdWithIndicatorsAndItemsAndLogs(long characterId)
         {
             var charactersRepository = _unitOfWork.Repository<Character>();
             var indicatorsRepository = _unitOfWork.Repository<Indicator>();
             var ownedItemsRepository = _unitOfWork.Repository<OwnedItem>();
+            var eventLogsRepository = _unitOfWork.Repository<EventLog>();
 
             var character = charactersRepository.GetSingle(ch => ch.Id == characterId);
 
             character.Indicators = indicatorsRepository.FindByWithIncluding(i => i.CharacterId == characterId, i => i.IndicatorType).ToList();
             character.OwnedItems = ownedItemsRepository.FindByWithIncluding(oi => oi.CharacterId == characterId, oi => oi.ItemType).ToList();
+            character.EventLogs = eventLogsRepository.FindByWithIncluding(oi => oi.CharacterId == characterId, oi => oi.TypeId).ToList();
 
             return character;
         }

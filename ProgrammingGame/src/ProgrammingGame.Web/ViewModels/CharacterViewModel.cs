@@ -17,5 +17,6 @@ namespace ProgrammingGame.Web.ViewModels
 
         public List<IndicatorViewModel> Indicators { get; set; }
         public List<OwnedItemViewModel> OwnedItems { get; set; }
+        public List<EventLogViewModel> EventLogs { get; set; }
     }
 }

@@ -21,5 +21,6 @@ namespace ProgrammingGame.Data.Entities
         public ICollection<Indicator> Indicators { get; set; }
         public ICollection<OwnedItem> OwnedItems { get; set; }  
         public ICollection<SystemAction> SystemActions { get; set; }
+        public ICollection<EventLog> EventLogs { get; set; }
     }
 }

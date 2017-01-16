@@ -22,7 +22,7 @@ namespace ProgrammingGame.Web.Controllers
         public IActionResult My()
         {
             var user = GetCurrentUser();
-            var characterFromDatabase = _charactersService.GetCharacterByIdWithIndicatorsAndItems(user.CharacterId ?? 0);
+            var characterFromDatabase = _charactersService.GetCharacterByIdWithIndicatorsAndItemsAndLogs(user.CharacterId ?? 0);
             if (characterFromDatabase == null)
                 return NotFound();
 
