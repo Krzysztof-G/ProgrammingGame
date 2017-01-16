@@ -8,8 +8,8 @@ using ProgrammingGame.Data.Infrastructure.Context;
 namespace ProgrammingGame.Data.Migrations
 {
     [DbContext(typeof(ProgrammingGameContext))]
-    [Migration("20170114232904_NAME")]
-    partial class NAME
+    [Migration("20170114232904_KeysFix")]
+    partial class KeysFix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
