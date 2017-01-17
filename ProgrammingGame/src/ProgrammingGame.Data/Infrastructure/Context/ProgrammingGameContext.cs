@@ -47,9 +47,9 @@ namespace ProgrammingGame.Data.Infrastructure.Context
             modelBuilder.Entity<Character>().HasMany(x => x.OwnedItems).WithOne(x => x.Character).HasForeignKey(x => x.CharacterId);
             modelBuilder.Entity<Character>().HasMany(x => x.EventLogs).WithOne(x => x.Character).HasForeignKey(x => x.CharacterId);
 
-            modelBuilder.Entity<Indicator>().HasKey(x => new { x.CharacterId, x.IndicatorTypeId });
+            modelBuilder.Entity<Indicator>().HasKey(x => new { x.CharacterId, x.TypeId });
 
-            modelBuilder.Entity<OwnedItem>().HasKey(x => new { x.CharacterId, x.ItemTypeId });
+            modelBuilder.Entity<OwnedItem>().HasKey(x => new { x.CharacterId, x.TypeId });
 
             modelBuilder.Entity<User>(entity =>
             {

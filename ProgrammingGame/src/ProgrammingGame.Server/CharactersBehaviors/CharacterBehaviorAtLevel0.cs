@@ -29,7 +29,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
         private void GainPointsForBeingRested()
         {
             var action = Character.SystemActions.FirstOrDefault(x => x.TypeId == (int)SystemActionTypes.GainPointsForBeingRested);
-            var energy = Character.Indicators.FirstOrDefault(x => x.IndicatorTypeId == (int)IndicatorTypes.Energy);
+            var energy = Character.Indicators.FirstOrDefault(x => x.TypeId == (int)IndicatorTypes.Energy);
 
             if (SystemActionsService.AcionShouldBeExecuted(action)
                 && energy.Value > 0)
@@ -43,7 +43,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
         private void LostPointsForBeingSleepy()
         {
             var action = Character.SystemActions.FirstOrDefault(x => x.TypeId == (int)SystemActionTypes.LostPointsForBeingSleepy);
-            var energy = Character.Indicators.FirstOrDefault(x => x.IndicatorTypeId == (int)IndicatorTypes.Energy);
+            var energy = Character.Indicators.FirstOrDefault(x => x.TypeId == (int)IndicatorTypes.Energy);
 
             if (SystemActionsService.AcionShouldBeExecuted(action)
                 && energy.Value == 0)
@@ -57,7 +57,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
         private void LostPointsForSleepToMuch()
         {
             var action = Character.SystemActions.FirstOrDefault(x => x.TypeId == (int)SystemActionTypes.LostPointsForSleepToMuch);
-            var energy = Character.Indicators.FirstOrDefault(x => x.IndicatorTypeId == (int)IndicatorTypes.Energy);
+            var energy = Character.Indicators.FirstOrDefault(x => x.TypeId == (int)IndicatorTypes.Energy);
 
             if (SystemActionsService.AcionShouldBeExecuted(action)
                 && energy.Value == 100
@@ -84,7 +84,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
 
         private void AnalyzeEnergyIndicator()
         {
-            var energy = Character.Indicators.FirstOrDefault(x => x.IndicatorTypeId == (int) IndicatorTypes.Energy);
+            var energy = Character.Indicators.FirstOrDefault(x => x.TypeId == (int) IndicatorTypes.Energy);
             var action = Character.SystemActions.FirstOrDefault(x => x.TypeId == (int) SystemActionTypes.SpanBeetwenEnergyAnalyze);
 
             if (Character.State == (int) CharacterStates.Idle

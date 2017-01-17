@@ -22,7 +22,7 @@ namespace ProgrammingGame.Data.Services.Instances
             indicatorsRepository.Insert(new Indicator
             {
                 CharacterId = characterId,
-                IndicatorTypeId = (int)indicatorType,
+                TypeId = (int)indicatorType,
                 Value = indicatorsTypesRepository.GetSingle(x => x.Id == (int)indicatorType).DefaultValue
             });
             _unitOfWork.SaveChanges();
@@ -31,7 +31,7 @@ namespace ProgrammingGame.Data.Services.Instances
         public void ChangeValue(Indicator indicator, int difference)
         {
             var indicatorsRepository = _unitOfWork.Repository<Indicator>();
-            var indicatorType = indicator.IndicatorType;
+            var indicatorType = indicator.Type;
 
             indicator.Value += difference;
 

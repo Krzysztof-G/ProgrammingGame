@@ -33,9 +33,9 @@ namespace ProgrammingGame.Server.CharactersBehaviors
         private void GainPointsForBeingRestedNotHungryAndNotThirsty()
         {
             var action = Character.SystemActions.FirstOrDefault(x => x.TypeId == (int)SystemActionTypes.GainPointsForBeingRestedNotHungryAndNotThirsty);
-            var energy = Character.Indicators.FirstOrDefault(x => x.IndicatorTypeId == (int)IndicatorTypes.Energy);
-            var hunger = Character.Indicators.FirstOrDefault(x => x.IndicatorTypeId == (int)IndicatorTypes.Hunger);
-            var thirst = Character.Indicators.FirstOrDefault(x => x.IndicatorTypeId == (int)IndicatorTypes.Thirst);
+            var energy = Character.Indicators.FirstOrDefault(x => x.TypeId == (int)IndicatorTypes.Energy);
+            var hunger = Character.Indicators.FirstOrDefault(x => x.TypeId == (int)IndicatorTypes.Hunger);
+            var thirst = Character.Indicators.FirstOrDefault(x => x.TypeId == (int)IndicatorTypes.Thirst);
 
             if (SystemActionsService.AcionShouldBeExecuted(action)
                 && energy.Value > 0
@@ -51,7 +51,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
         private void LostPointsForBeingSleepy()
         {
             var action = Character.SystemActions.FirstOrDefault(x => x.TypeId == (int)SystemActionTypes.LostPointsForBeingSleepy);
-            var energy = Character.Indicators.FirstOrDefault(x => x.IndicatorTypeId == (int)IndicatorTypes.Energy);
+            var energy = Character.Indicators.FirstOrDefault(x => x.TypeId == (int)IndicatorTypes.Energy);
 
             if (SystemActionsService.AcionShouldBeExecuted(action)
                 && energy.Value == 0)
@@ -65,7 +65,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
         private void LostPointsForSleepToMuch()
         {
             var action = Character.SystemActions.FirstOrDefault(x => x.TypeId == (int)SystemActionTypes.LostPointsForSleepToMuch);
-            var energy = Character.Indicators.FirstOrDefault(x => x.IndicatorTypeId == (int)IndicatorTypes.Energy);
+            var energy = Character.Indicators.FirstOrDefault(x => x.TypeId == (int)IndicatorTypes.Energy);
 
             if (SystemActionsService.AcionShouldBeExecuted(action)
                 && energy.Value == 100
@@ -80,7 +80,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
         private void LostPointsForBeingHungry()
         {
             var action = Character.SystemActions.FirstOrDefault(x => x.TypeId == (int)SystemActionTypes.LostPointsForBeingHungry);
-            var hunger = Character.Indicators.FirstOrDefault(x => x.IndicatorTypeId == (int)IndicatorTypes.Hunger);
+            var hunger = Character.Indicators.FirstOrDefault(x => x.TypeId == (int)IndicatorTypes.Hunger);
 
             if (SystemActionsService.AcionShouldBeExecuted(action)
                 && hunger.Value == 0)
@@ -94,7 +94,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
         private void LostPointsForBeingThirsty()
         {
             var action = Character.SystemActions.FirstOrDefault(x => x.TypeId == (int)SystemActionTypes.LostPointsForBeingThirst);
-            var thirst = Character.Indicators.FirstOrDefault(x => x.IndicatorTypeId == (int)IndicatorTypes.Thirst);
+            var thirst = Character.Indicators.FirstOrDefault(x => x.TypeId == (int)IndicatorTypes.Thirst);
 
             if (SystemActionsService.AcionShouldBeExecuted(action)
                 && thirst.Value == 0)
@@ -130,7 +130,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
 
         private void AnalyseEnergyIndicator()
         {
-            var energy = Character.Indicators.FirstOrDefault(x => x.IndicatorTypeId == (int)IndicatorTypes.Energy);
+            var energy = Character.Indicators.FirstOrDefault(x => x.TypeId == (int)IndicatorTypes.Energy);
             var action = Character.SystemActions.FirstOrDefault(x => x.TypeId == (int)SystemActionTypes.SpanBeetwenEnergyAnalyze);
 
             if (Character.State == (int) CharacterStates.Idle
@@ -153,7 +153,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
 
         private void AnalyseHungerIndicator()
         {
-            var hunger = Character.Indicators.FirstOrDefault(x => x.IndicatorTypeId == (int)IndicatorTypes.Hunger);
+            var hunger = Character.Indicators.FirstOrDefault(x => x.TypeId == (int)IndicatorTypes.Hunger);
             var action = Character.SystemActions.FirstOrDefault(x => x.TypeId == (int)SystemActionTypes.SpanBeetwenHungerAnalyze);
 
             if (Character.State == (int)CharacterStates.Idle
@@ -176,7 +176,7 @@ namespace ProgrammingGame.Server.CharactersBehaviors
 
         private void AnalyseThirstIndicator()
         {
-            var thirst = Character.Indicators.FirstOrDefault(x => x.IndicatorTypeId == (int)IndicatorTypes.Thirst);
+            var thirst = Character.Indicators.FirstOrDefault(x => x.TypeId == (int)IndicatorTypes.Thirst);
             var action = Character.SystemActions.FirstOrDefault(x => x.TypeId == (int)SystemActionTypes.SpanBeetwenThirstAnalyze);
 
             if (Character.State == (int)CharacterStates.Idle

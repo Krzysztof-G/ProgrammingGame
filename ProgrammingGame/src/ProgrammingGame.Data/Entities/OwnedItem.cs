@@ -2,8 +2,8 @@
 {
     public class OwnedItem : IEntity
     {
-        public int ItemTypeId { get; set; }
-        public ItemType ItemType { get; set; }
+        public int TypeId { get; set; }
+        public ItemType Type { get; set; }
 
         public long CharacterId { get; set; }
         public Character Character { get; set; }

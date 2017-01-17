@@ -29,8 +29,8 @@ namespace ProgrammingGame.Data.Services.Instances
 
             foreach (var character in characters)
             {
-                character.Indicators = indicatorsRepository.FindByWithIncluding(i => i.CharacterId == character.Id, i => i.IndicatorType).ToList();
-                character.OwnedItems = ownedItemsRepository.FindByWithIncluding(oi => oi.CharacterId == character.Id, oi => oi.ItemType).ToList();
+                character.Indicators = indicatorsRepository.FindByWithIncluding(i => i.CharacterId == character.Id, i => i.Type).ToList();
+                character.OwnedItems = ownedItemsRepository.FindByWithIncluding(oi => oi.CharacterId == character.Id, oi => oi.Type).ToList();
                 character.SystemActions = systemActionsRepository.FindByWithIncluding(sa => sa.CharacterId == character.Id, sa => sa.Type).ToList();
             }
 
@@ -46,8 +46,8 @@ namespace ProgrammingGame.Data.Services.Instances
 
             var character = charactersRepository.GetSingle(ch => ch.Id == characterId);
 
-            character.Indicators = indicatorsRepository.FindByWithIncluding(i => i.CharacterId == characterId, i => i.IndicatorType).ToList();
-            character.OwnedItems = ownedItemsRepository.FindByWithIncluding(oi => oi.CharacterId == characterId, oi => oi.ItemType).ToList();
+            character.Indicators = indicatorsRepository.FindByWithIncluding(i => i.CharacterId == characterId, i => i.Type).ToList();
+            character.OwnedItems = ownedItemsRepository.FindByWithIncluding(oi => oi.CharacterId == characterId, oi => oi.Type).ToList();
             character.EventLogs = eventLogsRepository.FindByWithIncluding(oi => oi.CharacterId == characterId, oi => oi.TypeId).ToList();
 
             return character;
@@ -105,7 +105,7 @@ namespace ProgrammingGame.Data.Services.Instances
             var energy = new Indicator
             {
                 CharacterId = newCharacter.Id,
-                IndicatorTypeId = (int)IndicatorTypes.Energy,
+                TypeId = (int)IndicatorTypes.Energy,
                 Value = indicatorTypesRepository.GetSingle(x => x.Id == (int)IndicatorTypes.Energy).DefaultValue
             };
             indicatorsRepository.Insert(energy);
@@ -171,13 +171,13 @@ namespace ProgrammingGame.Data.Services.Instances
         {
             var indicatorsRepository = _unitOfWork.Repository<Indicator>();
 
-            var indicator = indicatorsRepository.GetSingleWithIncluding(x => x.CharacterId == characterId, x => x.IndicatorType);
+            var indicator = indicatorsRepository.GetSingleWithIncluding(x => x.CharacterId == characterId, x => x.Type);
 
-            indicator.Value += amount ?? indicator.IndicatorType.MaxValue;
-            if (indicator.Value > indicator.IndicatorType.MaxValue)
-                indicator.Value = indicator.IndicatorType.MaxValue;
-            else if (indicator.Value < indicator.IndicatorType.MinValue)
-                indicator.Value = indicator.IndicatorType.MinValue;
+            indicator.Value += amount ?? indicator.Type.MaxValue;
+            if (indicator.Value > indicator.Type.MaxValue)
+                indicator.Value = indicator.Type.MaxValue;
+            else if (indicator.Value < indicator.Type.MinValue)
+                indicator.Value = indicator.Type.MinValue;
 
             indicatorsRepository.Update(indicator);
             _unitOfWork.SaveChanges();
