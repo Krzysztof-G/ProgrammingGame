@@ -1,12 +1,16 @@
-﻿{
+{
 	"version": "1.0.0-*",
 	"testRunner": "xunit",
 
-	"dependencies": {
-		"xunit": "2.2.0-beta4-build3444",
-		"Microsoft.NETCore.App": "1.1.0",
-		"dotnet-test-xunit": "2.2.0-preview2-build1029"
-	},
+    "dependencies": {
+        "xunit": "2.2.0-beta5-build3474",
+        "ProgrammingGame.Data": "1.0.0-*",
+        "ProgrammingGame.Common.Tests": "1.0.0-*",
+        "ProgrammingGame.Common": "1.0.0-*",
+        "ProgrammingGame.Api": "1.0.0-*",
+        "Microsoft.NETCore.App": "1.1.0",
+        "dotnet-test-xunit": "2.2.0-preview2-build1029"
+    },
 
 	"runtimes": {
 		"win10-x64": {}

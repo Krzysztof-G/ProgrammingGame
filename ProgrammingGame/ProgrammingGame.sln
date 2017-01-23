@@ -28,6 +28,10 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ProgrammingGame.Web", "src\
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ProgrammingGame.Web.Tests", "test\ProgrammingGame.Web.Tests\ProgrammingGame.Web.Tests.xproj", "{B6C15FC9-ED98-470D-85C7-5246D4D22C02}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ProgrammingGame.Common.Tests", "test\ProgrammingGame.Common.Tests\ProgrammingGame.Common.Tests.xproj", "{D7618DF0-D6C0-4353-88C6-F8148D057A0C}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ProgrammingGame.Data.Tests", "test\ProgrammingGame.Data.Tests\ProgrammingGame.Data.Tests.xproj", "{241022C3-2047-4E1C-AEEE-140C92833D00}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +70,14 @@ Global
 		{B6C15FC9-ED98-470D-85C7-5246D4D22C02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6C15FC9-ED98-470D-85C7-5246D4D22C02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6C15FC9-ED98-470D-85C7-5246D4D22C02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7618DF0-D6C0-4353-88C6-F8148D057A0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7618DF0-D6C0-4353-88C6-F8148D057A0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7618DF0-D6C0-4353-88C6-F8148D057A0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7618DF0-D6C0-4353-88C6-F8148D057A0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{241022C3-2047-4E1C-AEEE-140C92833D00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{241022C3-2047-4E1C-AEEE-140C92833D00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{241022C3-2047-4E1C-AEEE-140C92833D00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{241022C3-2047-4E1C-AEEE-140C92833D00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,5 +91,7 @@ Global
 		{3765E49F-9B3B-4E8B-8FC6-4BE28CD0AE43} = {DF7FB280-BBE0-4119-97B6-2855E70D5047}
 		{D33FB18A-E216-4153-8564-CDC3923AA8A1} = {8857DC19-9EC1-49F5-AF85-4C4F6397FB3B}
 		{B6C15FC9-ED98-470D-85C7-5246D4D22C02} = {DF7FB280-BBE0-4119-97B6-2855E70D5047}
+		{D7618DF0-D6C0-4353-88C6-F8148D057A0C} = {DF7FB280-BBE0-4119-97B6-2855E70D5047}
+		{241022C3-2047-4E1C-AEEE-140C92833D00} = {DF7FB280-BBE0-4119-97B6-2855E70D5047}
 	EndGlobalSection
 EndGlobal
